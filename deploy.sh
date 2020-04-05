@@ -5,3 +5,4 @@ php artisan storage:link
 php artisan key:generate
 php artisan migrate -vvv
 php artisan setup-passport
+php artisan db:seed
