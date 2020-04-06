@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helpers;
 use App\Helpers\TableParamsHelper;
-use App\Helpers\UserHelper;
 use App\Http\Requests\UserRequest;
 use App\User;
 use Illuminate\Http\Request;
@@ -14,11 +13,6 @@ use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-//        $this->authorizeResource(User::class);
-    }
-
     public function index(Request $request)
     {
         $tableParams = new TableParamsHelper($request);
@@ -102,10 +96,7 @@ class UserController extends Controller
 
     public function current(Request $request)
     {
-        return response(Auth::user()->setAppends([
-            "locale",
-            "available_locales"
-        ])->toArray(), 200);
+        return response(Auth::user()->toArray(), 200);
     }
 
     public function bulkDestroy(Request $request)
