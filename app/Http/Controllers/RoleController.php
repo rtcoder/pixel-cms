@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Helpers\TableParamsHelper;
 use App\Http\Requests\RoleRequest;
-use App\Module;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

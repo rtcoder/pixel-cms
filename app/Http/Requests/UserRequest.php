@@ -36,7 +36,7 @@ class UserRequest extends FormRequest
                 'required',
                 function ($attribute, $value, $fail) {
                     if (!Role::where('id', $value)
-                        >where('client_id', Auth::user()->client_id)->first())
+                        > where('client_id', Auth::user()->client_id)->first())
                         $fail("Role with id {$value} not found");
                 }
             ],

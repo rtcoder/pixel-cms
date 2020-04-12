@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Role;
-use App\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
