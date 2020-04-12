@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
+
     public function index(Request $request)
     {
         $tableParams = new TableParamsHelper($request);
@@ -49,13 +54,10 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $auth = Auth::user();
-        if ($auth->client->plan->users_count <= User::where('client_id', $auth->client_id)->count())
-            return response('Users count exceeded. Upgrade your plan to add more users', 400);
-
         $user = new User();
         $user->fill($request->all());
 
-        $password = UserHelper::generatePassword();
+        $password = Helpers::generatePassword();
         if ($auth->role->is_admin)
             $user->role_id = $request->get('role_id');
         $user->password = Hash::make($password);
@@ -97,34 +99,6 @@ class UserController extends Controller
     public function current(Request $request)
     {
         return response(Auth::user()->toArray(), 200);
-    }
-
-    public function bulkDestroy(Request $request)
-    {
-        $auth = Auth::user();
-        if (!$auth->role->is_admin)
-            return response(null, 403);
-
-        //--Check if request would delete all admins
-        if (User::where('client_id', $auth->client_id)->whereIn('id', $request->get('ids'))->whereHas('role', function ($q) {
-                $q->whereNull('client_id');
-            })->count() === User::where('client_id', $auth->client_id)->whereHas('role', function ($q) {
-                $q->whereNull('client_id');
-            })->count()) {
-            return response(null, 400);
-        }
-
-        User::where('client_id', $auth->client_id)->whereIn('id', $request->get('ids'))->delete();
-        return response(null, 200);
-    }
-
-    public function bulkUpdate(Request $request)
-    {
-        if (!Auth::user()->client->is_superadmin && !Auth::user()->role->is_admin)
-            return response(null, 403);
-
-        User::where('client_id', Auth::user()->client_id)->whereIn('id', $request->get('ids'))->update($request->get('data'));
-        return response(null, 200);
     }
 
     public function impersonate(User $user)

@@ -30,7 +30,8 @@ class SuperusersSeeder extends Seeder
 
         $role = Role::firstOrCreate([
             'name' => 'Administrator',
-            'is_admin' => true
+            'is_admin' => true,
+            'client_id' => $mainClient->id
         ]);
 
         $adminUser = User::where('email', 'dawidjez@gmail.com')->first();

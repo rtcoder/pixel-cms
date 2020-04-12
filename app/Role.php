@@ -11,10 +11,12 @@ class Role extends Model
 
     protected $fillable = [
         'name',
+        'permissions',
     ];
 
     protected $guarded = [
-        'is_admin'
+        'is_admin',
+        'client_id'
     ];
 
     protected $casts = [

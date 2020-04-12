@@ -35,7 +35,13 @@ class CreateAdminUser
             'email' => $event->client->email,
             'name' => 'Administrator',
         ]);
-        $role = Role::where('is_admin', true)->first();
+
+        $role = Role::firstOrCreate([
+            'name' => 'Administrator',
+            'is_admin' => true,
+            'client_id' => $event->client->id
+        ]);
+
         $admin->client_id = $event->client->id;
         $admin->is_active = true;
         $admin->role_id = $role->id;
