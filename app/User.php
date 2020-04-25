@@ -19,6 +19,7 @@ class User extends Authenticatable
     ];
 
     protected $guarded = [
+        'client_id',
         'role_id'
     ];
 

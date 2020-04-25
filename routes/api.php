@@ -17,6 +17,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('users', 'UserController');
     Route::resource('clients', 'ClientController');
     Route::resource('roles', 'RoleController');
+    Route::resource('contacts', 'ContactController');
 
     Route::get('settings', 'UserController@current');
 });
