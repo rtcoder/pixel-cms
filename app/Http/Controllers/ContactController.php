@@ -21,7 +21,6 @@ class ContactController extends Controller
         $tableParams = new TableParamsHelper($request);
 
         $contacts = Contact::where('client_id', Auth::user()->client_id)
-            ->orderBy($tableParams->column, $tableParams->direction)
             ->where(function ($q) use ($tableParams) {
                 $q->where('first_name', 'ilike', "%$tableParams->search_term%")
                     ->orWhere('last_name', 'ilike', "%$tableParams->search_term%")
@@ -31,6 +30,17 @@ class ContactController extends Controller
                     ->orWhere('phone_numbers', 'ilike', "%$tableParams->search_term%");
 
             });
+        switch ($tableParams->column) {
+            case "fullName":
+                $contacts->orderByRaw('UPPER(CONCAT(first_name, last_name)) ' . $tableParams->direction);
+                break;
+            case "email":
+                $contacts->orderByRaw('email_addresses::text ' . $tableParams->direction);
+                break;
+            default :
+                $contacts->orderBy($tableParams->column, $tableParams->direction);
+
+        }
 
         $per_page = $tableParams->limit != -1 ? $tableParams->limit : $contacts->count();
 

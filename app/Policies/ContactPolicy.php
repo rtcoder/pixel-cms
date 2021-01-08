@@ -30,7 +30,7 @@ class ContactPolicy
      */
     public function view(User $user, Contact $contact)
     {
-        return $user->client->is_superadmin || $contact->id != $user->clientId;
+        return $user->client->is_superadmin || $contact->id != $user->client_id;
     }
 
     /**
@@ -53,7 +53,7 @@ class ContactPolicy
      */
     public function update(User $user, Contact $contact)
     {
-        return $user->client->is_superadmin || $contact->id != $user->clientId;
+        return $user->client->is_superadmin || $contact->id != $user->client_id;
     }
 
     /**

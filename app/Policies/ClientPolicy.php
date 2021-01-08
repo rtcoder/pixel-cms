@@ -30,7 +30,7 @@ class ClientPolicy
      */
     public function view(User $user, Client $client)
     {
-        return $user->client->is_superadmin || $client->id != $user->clientId;
+        return $user->client->is_superadmin || $client->id != $user->client_id;
     }
 
     /**
@@ -53,7 +53,7 @@ class ClientPolicy
      */
     public function update(User $user, Client $client)
     {
-        return $user->client->is_superadmin || $client->id != $user->clientId;
+        return $user->client->is_superadmin || $client->id != $user->client_id;
     }
 
     /**

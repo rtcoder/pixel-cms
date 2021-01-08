@@ -18,11 +18,11 @@ class ContactRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'string|required|min:3',
-            'last_name' => 'string|nullable|min:3',
+            'first_name' => 'string|nullable|min:3',
+            'last_name' => 'string|required|min:3',
             'phone_numbers' => 'array|nullable|max:10',
             'email_addresses' => 'array|nullable|max:10',
-            'email_addresses.*' => 'email',
+            'email_addresses.*' => 'nullable|email',
             'company' => 'string|nullable',
         ];
     }

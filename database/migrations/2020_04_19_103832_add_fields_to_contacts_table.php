@@ -15,6 +15,7 @@ class AddFieldsToContactsTable extends Migration
     {
         Schema::table('contacts', function (Blueprint $table) {
             $table->foreignId('client_id')->constrained();
+            $table->string('company')->nullable(true)->change();
         });
     }
 
@@ -28,6 +29,7 @@ class AddFieldsToContactsTable extends Migration
         Schema::table('contacts', function (Blueprint $table) {
             $table->dropForeign('contacts_client_id_foreign');
             $table->dropColumn('client_id');
+            $table->string('company')->nullable(false)->change();
         });
     }
 }
