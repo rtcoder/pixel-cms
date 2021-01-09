@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -30,14 +30,28 @@ class AuthController extends Controller
             return redirect()->back()
                 ->withInput($request->input());
         }
-
-        if (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')])) {
+        $data = [
+            'email' => $request->get('email'),
+            'password' => $request->get('password')
+        ];
+        $remember = $request->get('remember', false);
+        if (Auth::attempt($data, $remember)) {
 
             return $returnTo
                 ? redirect($returnTo)
                 : redirect()->route('home');
         }
+
         return view('pages.auth.login');
+    }
+
+    public function loginAs(int $id): RedirectResponse
+    {
+        if (!Auth::user()->client->is_super_admin)
+            abort(403);
+
+        Auth::loginUsingId($id);
+        return redirect()->route('home');
     }
 
 //    public function register(Request $request)
@@ -60,7 +74,7 @@ class AuthController extends Controller
 //            : redirect()->route('login');
 //    }
 
-    public function logout()
+    public function logout(): RedirectResponse
     {
         Auth::logout();
         return redirect()->route('login');

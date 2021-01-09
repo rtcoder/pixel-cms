@@ -8,4 +8,8 @@ return [
     'register' => "Register",
     'logout' => "Logout",
     'search' => 'search',
+    'add' => 'Add new',
+    'edit' => 'Edit',
+    'yes' => 'yes',
+    'no' => 'no',
 ];

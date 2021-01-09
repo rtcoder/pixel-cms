@@ -4,9 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Auth;
 
 class UserRequest extends FormRequest
@@ -19,18 +17,17 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => $this->method() !== 'PUT' ? 'email|required|unique:users,email' :
-                [
-                    'email',
-                    'nullable',
-                    function ($attribute, $value, $fail) {
-                        if (User::where([
-                            ['id', '!=', $this->route('user')->id],
-                            ['email', $value]
-                        ])->first())
-                            $fail("Cannot change email, as it's already used by another user.");
-                    }
-                ],
+            'email' => [
+                'email',
+                'nullable',
+                function ($attribute, $value, $fail) {
+                    if (User::where([
+                        ['id', '!=', $this->route('id')],
+                        ['email', $value]
+                    ])->first())
+                        $fail(__('messages.email_taken'));
+                }
+            ],
             'name' => 'required|min:3',
             'is_active' => 'boolean',
             'role_id' => [
@@ -38,23 +35,11 @@ class UserRequest extends FormRequest
                 function ($attribute, $value, $fail) {
                     if (!Role::where('id', $value)
                         ->where('client_id', Auth::user()->client_id)->first())
-                        $fail("Role with id {$value} not found");
+                        $fail(__('messages.role_not_exists'));
                 }
             ],
             'password' => 'string|nullable|min:6|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/',
             'password_confirm' => 'required_with:password|same:password'
         ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'required' => 'The :attribute field is required',
-        ];
-    }
-
-    public function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response(['errors' => $validator->errors()], 400));
     }
 }

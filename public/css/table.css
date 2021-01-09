@@ -36,3 +36,27 @@ td .row-options .edit {
 td .row-options .delete {
     color: var(--dangerColor);
 }
+
+.table-title {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.table-title button.add-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: var(--primaryColor);
+    color: #ffffff;
+    border: 1px solid var(--accentColor);
+    line-height: 24px;
+}
+
+.no-data {
+    color: var(--mutedColor);
+    text-align: center;
+    padding: 20px;
+    font-size: 30px;
+}

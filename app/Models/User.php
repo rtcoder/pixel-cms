@@ -9,6 +9,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property integer id
+ * @property string name
+ * @property string email
+ * @property string password
+ * @property bool is_active
+ * @property integer client_id
+ * @property integer role_id
+ */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, SoftDeletes;
@@ -18,7 +27,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'is_active',
-        'client_id',
     ];
 
     protected $guarded = [

@@ -4,7 +4,7 @@
     </a>
 
     @if($canDelete ?? true)
-        <a href="">
+        <a href="{{url()->current()}}/{{ $row->id }}/delete">
             <span class="material-icons delete">delete</span>
         </a>
     @endif

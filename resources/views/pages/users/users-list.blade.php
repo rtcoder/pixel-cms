@@ -4,7 +4,7 @@
 @section('content')
     @include('layout.search-form')
 
-    <h1>@lang('pages.users')</h1>
+    @include('layout.table.table-title', ['title' => 'pages.users'])
     <table>
         <thead>
         <tr>
@@ -31,4 +31,9 @@
         @endforeach
         </tbody>
     </table>
+
+    @if(!count($users))
+        @include('layout.table.no-data')
+    @endif
+
 @endsection

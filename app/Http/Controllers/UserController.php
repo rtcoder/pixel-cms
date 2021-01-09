@@ -3,20 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Helpers;
+use App\Helpers\MailHelper;
 use App\Helpers\TableParamsHelper;
 use App\Http\Requests\UserRequest;
+use App\Models\Role;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->authorizeResource(User::class, 'user');
-    }
 
     public function index(Request $request)
     {
@@ -52,36 +51,70 @@ class UserController extends Controller
         ]);
     }
 
-    public function show(User $user)
+    public function add()
     {
-        return response($user->toArray(), 200);
+        $roles = Role::where('client_id', Auth::user()->client_id)->get();
+        return view('pages.users.single-user', [
+            'roles' => $roles
+        ]);
     }
 
-    public function store(UserRequest $request)
+    public function edit(int $id)
+    {
+        $user = User::where([
+            'id' => $id,
+            'client_id' => Auth::user()->client_id
+        ])->first();
+
+        if (!$user) {
+            abort(404);
+        }
+
+        $roles = Role::where('client_id', $user->client_id)->get();
+        return view('pages.users.single-user', [
+            'user' => $user,
+            'roles' => $roles
+        ]);
+    }
+
+    public function create(UserRequest $request): RedirectResponse
     {
         $auth = Auth::user();
         $user = new User();
         $user->fill($request->all());
 
         $password = Helpers::generatePassword();
-        if ($auth->role->is_admin)
+
+        if ($auth->role->is_admin) {
             $user->role_id = $request->get('role_id');
+        }
+
         $user->password = Hash::make($password);
         $user->client_id = $auth->client_id;
         $user->save();
 
-        Mail::send('emails.user_create', [
-            'password' => $password
-        ], function ($message) use ($user) {
-            $message->to($user->email)
-                ->subject('ArtSaaS account');
-            $message->from(env('MAIL_USERNAME'), 'ArtSaaS');
-        });
-        return response(['id' => $user->id], 201);
+        App::setLocale($user->client->locale);
+        MailHelper::send(
+            'emails.user_create',
+            [
+                'password' => $password,
+                'email' => $user->email,
+            ],
+            $user->email,
+            __('emails.account_created')
+        );
+        return redirect()->route('users');
     }
 
-    public function update(UserRequest $request, User $user)
+    public function update(UserRequest $request, int $id): RedirectResponse
     {
+        $user = User::where([
+            'id' => $id,
+            'client_id' => Auth::user()->client_id
+        ])->first();
+        if (!$user) {
+            abort(404);
+        }
         $auth = Auth::user();
         if ($request->get('password'))
             $user->password = Hash::make($request->get('password'));
@@ -93,69 +126,67 @@ class UserController extends Controller
             $user->role_id = $request->get('role_id');
         }
         $user->save();
-        return response(null, 200);
+        return redirect()->route('users');
     }
 
-    public function destroy(User $user)
+    public function destroy(int $id)
     {
+        $auth = Auth::user();
+        $user = User::where([
+            'id' => $id,
+            'client_id' => $auth->client_id
+        ])->first();
+        if (!$auth->role->is_admin) {
+            abort(403);
+        }
+        if (!$user) {
+            abort(404);
+        }
         $user->delete();
-        return response(null, 200);
+        return redirect()->route('users');
     }
 
-    public function current(Request $request)
-    {
-        return response(Auth::user()->toArray(), 200);
-    }
 
-    public function impersonate(User $user)
-    {
-        if (!Auth::user()->client->is_super_admin)
-            return response(null, 403);
+//    public function requestPasswordReset(Request $request)
+//    {
+//        $user = User::where('email', $request->get('email'))->first();
+//
+//        if (!$user)
+//            return response(null, 404);
+//
+//        $user->password_reset_token = Helpers::generatePassword(32);
+//        $user->save();
+//
+//        Mail::send('emails.user_request_password_reset', [
+//            'link' => env('APP_URL') . '/api/users/confirm_password_reset/' . $user->password_reset_token
+//        ], function ($message) use ($user) {
+//            $message->to($user->email)
+//                ->subject('ArtSaaS account password reset request');
+//            $message->from(env('MAIL_USERNAME'), 'ArtSaaS');
+//        });
+//
+//        return response(null);
+//    }
 
-        $token = $user->createToken('Impersonate grant token')->accessToken;
-        return $token;
-    }
-
-    public function requestPasswordReset(Request $request)
-    {
-        $user = User::where('email', $request->get('email'))->first();
-
-        if (!$user)
-            return response(null, 404);
-
-        $user->password_reset_token = Helpers::generatePassword(32);
-        $user->save();
-
-        Mail::send('emails.user_request_password_reset', [
-            'link' => env('APP_URL') . '/api/users/confirm_password_reset/' . $user->password_reset_token
-        ], function ($message) use ($user) {
-            $message->to($user->email)
-                ->subject('ArtSaaS account password reset request');
-            $message->from(env('MAIL_USERNAME'), 'ArtSaaS');
-        });
-
-        return response(null, 200);
-    }
-
-    public function confirmPasswordReset(string $token)
-    {
-        $user = User::where('password_reset_token', $token)->first();
-        if (!$user || !$token)
-            return response(null, 404);
-
-        $password = Helpers::generatePassword();
-        $user->password_reset_token = null;
-        $user->password = Hash::make($password);
-        $user->save();
-
-        Mail::send('emails.user_confirm_password_reset', [
-            'password' => $password
-        ], function ($message) use ($user) {
-            $message->to($user->email)
-                ->subject('ArtSaaS account password reset confirmation');
-            $message->from(env('MAIL_USERNAME'), 'ArtSaaS');
-        });
-
-        return redirect(env('APP_URL') . ':4200');
-    }
+//    public function confirmPasswordReset(string $token)
+//    {
+//        $user = User::where('password_reset_token', $token)->first();
+//        if (!$user || !$token)
+//            return response(null, 404);
+//
+//        $password = Helpers::generatePassword();
+//        $user->password_reset_token = null;
+//        $user->password = Hash::make($password);
+//        $user->save();
+//
+//        Mail::send('emails.user_confirm_password_reset', [
+//            'password' => $password
+//        ], function ($message) use ($user) {
+//            $message->to($user->email)
+//                ->subject('ArtSaaS account password reset confirmation');
+//            $message->from(env('MAIL_USERNAME'), 'ArtSaaS');
+//        });
+//
+//        return redirect(env('APP_URL') . ':4200');
+//    }
 }

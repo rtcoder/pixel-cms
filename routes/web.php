@@ -17,13 +17,44 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+function generateUrls(string $path, string $controllerClass, string $name)
+{
+    Route::get('/' . $path, [$controllerClass, 'index'])->name($name);
+
+    Route::get('/' . $path . '/add', [$controllerClass, 'add'])
+        ->name($name . '-add');
+
+    Route::post('/' . $path . '/add', [$controllerClass, 'create'])
+        ->name($name . '-create');
+
+    Route::get('/' . $path . '/{id}', [$controllerClass, 'edit'])
+        ->where('id', '[0-9]+')
+        ->name($name . '-edit');
+
+    Route::post('/' . $path . '/{id}', [$controllerClass, 'update'])
+        ->where('id', '[0-9]+')
+        ->name($name . '-update');
+
+    Route::get('/' . $path . '/{id}/delete', [$controllerClass, 'destroy'])
+        ->where('id', '[0-9]+')
+        ->name($name . '-delete');
+}
+
 Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::get('/contacts', [ContactController::class, 'index'])->name('contacts');
-    Route::get('/users', [UserController::class, 'index'])->name('users');
-    Route::get('/roles', [HomeController::class, 'index'])->name('roles');
-    Route::get('/clients', [HomeController::class, 'index'])->name('clients');
+
+    generateUrls('users', UserController::class, 'users');
+    generateUrls('roles', UserController::class, 'roles');
+    generateUrls('clients', UserController::class, 'clients');
+
     Route::get('/settings', [HomeController::class, 'index'])->name('settings');
+});
+
+Route::middleware('superadmin')->group(function () {
+    generateUrls('contacts', ContactController::class, 'contacts');
+
+    Route::get('/login-as/{id}', [AuthController::class, 'loginAs'])
+        ->where('id', '[0-9]+')->name('login-as');
 });
 
 //AUTH
