@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Client;
+use App\Models\Client;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;

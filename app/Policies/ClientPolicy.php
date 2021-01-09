@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Client;
-use App\User;
+use App\Models\Client;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ClientPolicy
@@ -18,7 +18,7 @@ class ClientPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->client->is_superadmin;
+        return $user->client->is_super_admin;
     }
 
     /**
@@ -30,7 +30,7 @@ class ClientPolicy
      */
     public function view(User $user, Client $client)
     {
-        return $user->client->is_superadmin || $client->id != $user->client_id;
+        return $user->client->is_super_admin || $client->id != $user->client_id;
     }
 
     /**
@@ -41,7 +41,7 @@ class ClientPolicy
      */
     public function create(User $user)
     {
-        return $user->client->is_superadmin;
+        return $user->client->is_super_admin;
     }
 
     /**
@@ -53,7 +53,7 @@ class ClientPolicy
      */
     public function update(User $user, Client $client)
     {
-        return $user->client->is_superadmin || $client->id != $user->client_id;
+        return $user->client->is_super_admin || $client->id != $user->client_id;
     }
 
     /**
@@ -65,7 +65,7 @@ class ClientPolicy
      */
     public function delete(User $user, Client $client)
     {
-        return $user->client->is_superadmin;
+        return $user->client->is_super_admin;
     }
 
     /**
@@ -77,7 +77,7 @@ class ClientPolicy
      */
     public function restore(User $user, Client $client)
     {
-        return $user->client->is_superadmin;
+        return $user->client->is_super_admin;
     }
 
     /**
@@ -89,6 +89,6 @@ class ClientPolicy
      */
     public function forceDelete(User $user, Client $client)
     {
-        return $user->client->is_superadmin;
+        return $user->client->is_super_admin;
     }
 }

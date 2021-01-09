@@ -12,8 +12,10 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    'login_title' => 'Sign in',
+
     'failed' => 'These credentials do not match our records.',
+    'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'inactive_account' => 'Your account is inactive. Contact with administrator'
 
 ];

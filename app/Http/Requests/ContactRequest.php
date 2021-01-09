@@ -15,14 +15,12 @@ class ContactRequest extends FormRequest
      * @return array
      */
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'first_name' => 'string|nullable|min:3',
             'last_name' => 'string|required|min:3',
             'phone_numbers' => 'array|nullable|max:10',
-            'email_addresses' => 'array|nullable|max:10',
-            'email_addresses.*' => 'nullable|email',
             'company' => 'string|nullable',
         ];
     }

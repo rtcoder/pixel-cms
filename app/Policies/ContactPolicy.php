@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Contact;
-use App\User;
+use App\Models\Contact;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ContactPolicy
@@ -18,7 +18,7 @@ class ContactPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->client->is_superadmin;
+        return $user->client->is_super_admin;
     }
 
     /**
@@ -30,7 +30,7 @@ class ContactPolicy
      */
     public function view(User $user, Contact $contact)
     {
-        return $user->client->is_superadmin || $contact->id != $user->client_id;
+        return $user->client->is_super_admin || $contact->id != $user->client_id;
     }
 
     /**
@@ -41,7 +41,7 @@ class ContactPolicy
      */
     public function create(User $user)
     {
-        return $user->client->is_superadmin;
+        return $user->client->is_super_admin;
     }
 
     /**
@@ -53,7 +53,7 @@ class ContactPolicy
      */
     public function update(User $user, Contact $contact)
     {
-        return $user->client->is_superadmin || $contact->id != $user->client_id;
+        return $user->client->is_super_admin || $contact->id != $user->client_id;
     }
 
     /**
@@ -65,7 +65,7 @@ class ContactPolicy
      */
     public function delete(User $user, Contact $contact)
     {
-        return $user->client->is_superadmin;
+        return $user->client->is_super_admin;
     }
 
     /**
@@ -77,7 +77,7 @@ class ContactPolicy
      */
     public function restore(User $user, Contact $contact)
     {
-        return $user->client->is_superadmin;
+        return $user->client->is_super_admin;
     }
 
     /**
@@ -89,6 +89,6 @@ class ContactPolicy
      */
     public function forceDelete(User $user, Contact $contact)
     {
-        return $user->client->is_superadmin;
+        return $user->client->is_super_admin;
     }
 }

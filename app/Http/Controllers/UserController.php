@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Helpers;
 use App\Helpers\TableParamsHelper;
 use App\Http\Requests\UserRequest;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -21,19 +21,22 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $tableParams = new TableParamsHelper($request);
-
+        $authUser = Auth::user();
         $users = User::query();
-        if (!Auth::user()->client->is_superadmin || !$tableParams->client_id) {
-            $users = $users->where('client_id', Auth::user()->client_id);
+        if (!$authUser->client->is_super_admin || !$tableParams->client_id) {
+            $users = $users->where('client_id', $authUser->client_id);
         } else {
             $users = $users->where('client_id', $tableParams->client_id);
         }
 
-        $users = $users->orderBy($tableParams->column, $tableParams->direction)
-            ->where(function ($q) use ($tableParams) {
+        $users = $users->orderBy($tableParams->column, $tableParams->direction);
+
+        if ($tableParams->search_term) {
+            $users->where(function ($q) use ($tableParams) {
                 $q->where('name', 'ilike', "%$tableParams->search_term%")
                     ->orWhere('email', 'ilike', "%$tableParams->search_term%");
             });
+        }
 
         $per_page = $tableParams->limit != -1 ? $tableParams->limit : $users->count();
 
@@ -42,8 +45,11 @@ class UserController extends Controller
         foreach ($users->items() as $item) {
             TableParamsHelper::filterResponseAttributes($item, $request->get('attributes'), User::class);
         }
-
-        return response($users, 200);
+//dd($users->toArray());
+        return view('pages.users.users-list', [
+            'users' => $users,
+            'searchTerm' => $tableParams->search_term
+        ]);
     }
 
     public function show(User $user)
@@ -103,7 +109,7 @@ class UserController extends Controller
 
     public function impersonate(User $user)
     {
-        if (!Auth::user()->client->is_superadmin)
+        if (!Auth::user()->client->is_super_admin)
             return response(null, 403);
 
         $token = $user->createToken('Impersonate grant token')->accessToken;

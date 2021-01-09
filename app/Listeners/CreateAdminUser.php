@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use App\Events\ClientCreated;
 use App\Helpers\Helpers;
-use App\Helpers\UserHelper;
-use App\Role;
-use App\User;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -56,7 +55,7 @@ class CreateAdminUser
         ], function ($message) use ($admin) {
             $message->to($admin->email)
                 ->subject('Pixel account');
-            $message->from(env('MAIL_USERNAME'), 'Pixel');
+            $message->from(env('MAIL_USERNAME'), env('APP_NAME'));
         });
     }
 }

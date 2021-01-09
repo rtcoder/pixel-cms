@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 
-use App\Client;
-use App\User;
+use App\Models\Client;
+use App\Models\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -17,7 +17,7 @@ class ClientRequest extends FormRequest
      * @return array
      */
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'slug' => $this->method() !== 'PUT' ? 'required|unique:clients,slug' :

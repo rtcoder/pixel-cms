@@ -21,7 +21,7 @@ class RoleController extends Controller
         $tableParams = new TableParamsHelper($request);
 
         $roles = Role::query();
-        if (!$auth->client->is_superadmin || !$tableParams->client_id) {
+        if (!$auth->client->is_super_admin || !$tableParams->client_id) {
             $roles = $roles->where('client_id', $auth->client_id);
         } else {
             $roles = $roles->where('client_id', $tableParams->client_id);

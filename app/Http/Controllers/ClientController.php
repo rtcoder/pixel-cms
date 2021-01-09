@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Client;
 use App\Helpers\TableParamsHelper;
 use App\Http\Requests\ClientRequest;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -54,7 +54,7 @@ class ClientController extends Controller
 
     public function update(ClientRequest $request, Client $client)
     {
-        if (!Auth::user()->client->is_superadmin && $request->get('modules')) {
+        if (!Auth::user()->client->is_super_admin && $request->get('modules')) {
             $data = $request->except('modules');
         } else {
             $data = $request->all();
@@ -67,7 +67,7 @@ class ClientController extends Controller
 
     public function destroy(Client $client)
     {
-        if (!Auth::user()->client->is_superadmin)
+        if (!Auth::user()->client->is_super_admin)
             return response(null, 403);
 
         $client->delete();

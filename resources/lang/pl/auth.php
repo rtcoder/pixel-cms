@@ -12,8 +12,9 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    'login_title' => 'Logowanie',
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
+    'failed' => 'Nieprawidłowy login lib hasło.',
+    'password' => 'Podane hasło jest nieprawidłowe.',
+    'throttle' => 'Zbyt wiele prób logowania. Spróbuj za :seconds sekund.',
+    'inactive_account' => 'Twoje konto nie jest aktywne. Skontaktuj się z adminstratorem'
 ];

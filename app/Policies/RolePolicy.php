@@ -3,9 +3,9 @@
 namespace App\Policies;
 
 use App\Helpers\PermissionsHelper;
-use App\Module;
-use App\Role;
-use App\User;
+use App\Models\Module;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class RolePolicy

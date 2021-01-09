@@ -1,0 +1,38 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+}
+
+th {
+    text-align: left;
+    border-bottom: 2px solid #000;
+}
+
+td {
+    border-bottom: 1px solid #ccc;
+}
+
+th.id-column {
+    width: 50px;
+}
+
+tbody tr:hover {
+    background: #f3f3f3;
+}
+
+td .row-options .edit,
+td .row-options .delete {
+    cursor: pointer;
+}
+
+td .row-options .edit {
+    color: var(--primaryColor);
+}
+
+td .row-options .delete {
+    color: var(--dangerColor);
+}

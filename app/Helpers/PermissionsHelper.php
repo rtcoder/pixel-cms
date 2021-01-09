@@ -2,7 +2,8 @@
 
 namespace App\Helpers;
 
-use App\User;
+
+use App\Models\User;
 
 class PermissionsHelper
 {
@@ -25,6 +26,6 @@ class PermissionsHelper
 
     public static function clientHasPermission(User $user, int $module): bool
     {
-        return $user->client->is_superadmin || in_array($module, $user->client->modules);
+        return $user->client->is_super_admin || in_array($module, $user->client->modules);
     }
 }
