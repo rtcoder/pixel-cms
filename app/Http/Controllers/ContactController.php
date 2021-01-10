@@ -76,9 +76,9 @@ class ContactController extends Controller
         if (!$contact) {
             abort(404);
         }
-//dd($contact);
+
         return view('pages.contacts.single-contact', [
-            'contact' => $contact,
+            'contact' => $contact
         ]);
     }
 

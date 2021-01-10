@@ -7,18 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property integer id
+ * @property string slug
+ * @property string name
+ * @property string email
+ * @property string phone_number
+ * @property string locale
+ * @property array available_locales
+ * @property array modules
+ * @property bool is_super_admin
+ */
 class Client extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
-        'slug',
         'name',
         'email',
         'phone_number',
         'locale',
         'available_locales',
-        'modules',
     ];
 
     protected $casts = [
@@ -31,10 +40,12 @@ class Client extends Model
     ];
 
     protected $appends = [
-        'is_super_admin'
+        'is_super_admin',
     ];
 
-    protected $with = [
+    protected $guarded = [
+        'slug',
+        'modules',
     ];
 
     public function users(): HasMany

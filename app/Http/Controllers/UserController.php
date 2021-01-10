@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserCreated;
 use App\Helpers\Helpers;
-use App\Helpers\MailHelper;
 use App\Helpers\TableParamsHelper;
 use App\Http\Requests\UserRequest;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -93,16 +92,8 @@ class UserController extends Controller
         $user->client_id = $auth->client_id;
         $user->save();
 
-        App::setLocale($user->client->locale);
-        MailHelper::send(
-            'emails.user_create',
-            [
-                'password' => $password,
-                'email' => $user->email,
-            ],
-            $user->email,
-            __('emails.account_created')
-        );
+        event(new UserCreated($user, $password));
+
         return redirect()->route('users');
     }
 

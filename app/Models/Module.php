@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Module extends Model
+class Module
 {
     const CLIENTS_MODULE = 0;
     const USERS_MODULE = 1;
@@ -39,8 +37,8 @@ class Module extends Model
         self::USERS_MODULE => 'pages.users',
         self::ROLES_MODULE => 'pages.roles',
         self::CONTACTS_MODULE => 'pages.contacts',
-        self::DOCUMENTS_MODULE => 'pages.documents',
-        self::WWW_MODULE => 'pages.website',
-        self::MAILING_MODULE => 'pages.mailing'
+//        self::DOCUMENTS_MODULE => 'pages.documents',
+//        self::WWW_MODULE => 'pages.website',
+//        self::MAILING_MODULE => 'pages.mailing'
     ];
 }

@@ -11,7 +11,7 @@ class ClientCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $client;
+    private $client;
 
     /**
      * Create a new event instance.
@@ -21,5 +21,10 @@ class ClientCreated
     public function __construct(Client $client)
     {
         $this->client = $client;
+    }
+
+    public function getClient(): Client
+    {
+        return $this->client;
     }
 }
