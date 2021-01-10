@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,7 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
     generateUrls('users', UserController::class, 'users');
-    generateUrls('roles', UserController::class, 'roles');
+    generateUrls('roles', RoleController::class, 'roles');
     generateUrls('clients', UserController::class, 'clients');
 
     Route::get('/settings', [HomeController::class, 'index'])->name('settings');

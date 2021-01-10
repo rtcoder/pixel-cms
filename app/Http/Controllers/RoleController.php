@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\PermissionsHelper;
 use App\Helpers\TableParamsHelper;
 use App\Http\Requests\RoleRequest;
-use App\Role;
+use App\Models\Module;
+use App\Models\Role;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
-    public function __construct()
-    {
-        $this->authorizeResource(Role::class, 'role');
-    }
 
     public function index(Request $request)
     {
+        if (!PermissionsHelper::roleHasPermission(Auth::user(), Module::ROLES_MODULE)) {
+            abort(403);
+        }
         $auth = Auth::user();
         $tableParams = new TableParamsHelper($request);
 
@@ -40,35 +42,86 @@ class RoleController extends Controller
             TableParamsHelper::filterResponseAttributes($item, $request->get('attributes'), Role::class);
         }
 
-        return response($roles, 200);
+        return view('pages.roles.roles-list', [
+            'roles' => $roles,
+            'searchTerm' => $tableParams->search_term
+        ]);
     }
 
-    public function show(Role $role)
+    public function add()
     {
-        return response($role->toArray(), 200);
+        return view('pages.roles.single-role', [
+            'modules' => Module::MODULES,
+            'modulesNames' => Module::MODULES_PAGE_NAMES,
+            'actions' => Module::ACTIONS,
+        ]);
     }
 
-    public function store(RoleRequest $request)
+    public function edit(int $id)
     {
-        $auth = Auth::user();
+        $role = Role::where([
+            'id' => $id,
+            'client_id' => Auth::user()->client_id
+        ])->first();
+
+        if (!$role) {
+            abort(404);
+        }
+
+        return view('pages.roles.single-role', [
+            'role' => $role,
+            'modules' => Module::MODULES,
+            'modulesNames' => Module::MODULES_PAGE_NAMES,
+            'actions' => Module::ACTIONS,
+        ]);
+    }
+
+    public function create(RoleRequest $request): RedirectResponse
+    {
+        $data = $request->all();
+        $data['permissions'] = $this->parsePermissions($data['permissions']);
         $role = new Role();
         $role->fill($request->all());
-        $role->client_id = $auth->client_id;
+        $role->client_id = Auth::user()->client_id;
         $role->save();
 
-        return response(['id' => $role->id], 201);
+        return redirect()->route('roles');
     }
 
-    public function update(RoleRequest $request, Role $role)
+    public function update(RoleRequest $request, int $id): RedirectResponse
     {
+        $role = Role::where([
+            'id' => $id,
+            'client_id' => Auth::user()->client_id
+        ])->first();
+
+        if (!$role) {
+            abort(404);
+        }
         $role->fill($request->all());
         $role->save();
-        return response(null, 200);
+        return redirect()->route('roles');
     }
 
-    public function destroy(Role $role)
+    public function destroy(int $id): RedirectResponse
     {
+        $role = Role::where([
+            'id' => $id,
+            'client_id' => Auth::user()->client_id
+        ])->first();
+
+        if (!$role) {
+            abort(404);
+        }
         $role->delete();
-        return response(null, 200);
+        return redirect()->route('roles');
+    }
+
+    private function parsePermissions(array $permissions): array
+    {
+        foreach ($permissions as $module => $permission) {
+            $permissions[$module] = array_keys($permission);
+        }
+        return $permissions;
     }
 }

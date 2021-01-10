@@ -12,4 +12,5 @@ return [
     'edit' => 'Edycja',
     'yes' => 'tak',
     'no' => 'nie',
+    'select_all' => 'zaznacz wszystkie',
 ];

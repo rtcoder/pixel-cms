@@ -12,4 +12,5 @@ return [
     'edit' => 'Edit',
     'yes' => 'yes',
     'no' => 'no',
+    'select_all' => 'select all',
 ];

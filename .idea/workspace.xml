@@ -5,16 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a967dc70-7b2d-4f9e-8db6-5f18eeedd887" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/pages/contacts/single-contact.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/en/permissions.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/pl/permissions.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/pages/roles/roles-list.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/pages/roles/single-role.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ContactController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ContactController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/ContactRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/ContactRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Contact.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Contact.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/ContactEmailAddress.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ContactEmailAddress.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/ContactPhoneNumber.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ContactPhoneNumber.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Policies/ContactPolicy.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/contacts/contacts-list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/contacts/contacts-list.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/users/single-user.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/users/single-user.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RoleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RoleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/RoleRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/RoleRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Module.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Module.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Role.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Role.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Policies/RolePolicy.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/SuperUserSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/SuperUserSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/common.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/common.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/pl/common.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/pl/common.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,18 +160,18 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/pages/contacts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/lang/pl" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\dawid\projects\pixel-cms\resources\views\pages\contacts" />
       <recent name="C:\Users\dawid\projects\pixel-cms\resources\lang\pl" />
       <recent name="C:\Users\dawid\projects\pixel-cms\resources\lang\en" />
+      <recent name="C:\Users\dawid\projects\pixel-cms\resources\views\pages" />
+      <recent name="C:\Users\dawid\projects\pixel-cms\resources\views\pages\contacts" />
       <recent name="C:\Users\dawid\projects\pixel-cms\resources\views\layout\table" />
-      <recent name="C:\Users\dawid\projects\pixel-cms\app\Helpers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\dawid\projects\pixel-cms\pixel2\pixel-cms\app\Http" />
@@ -204,7 +208,7 @@
       <option name="presentableId" value="Default" />
       <updated>1610129412667</updated>
       <workItem from="1610129414791" duration="20322000" />
-      <workItem from="1610202207345" duration="14912000" />
+      <workItem from="1610202207345" duration="25000000" />
     </task>
     <task id="LOCAL-00001" summary="full project in laravel">
       <created>1610202323295</created>
@@ -220,7 +224,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610210315074</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="contacts">
+      <created>1610280322176</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1610280322176</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,6 +252,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="full project in laravel" />
     <MESSAGE value="users" />
-    <option name="LAST_COMMIT_MESSAGE" value="users" />
+    <MESSAGE value="contacts" />
+    <option name="LAST_COMMIT_MESSAGE" value="contacts" />
   </component>
 </project>
