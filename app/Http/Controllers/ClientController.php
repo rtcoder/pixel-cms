@@ -94,7 +94,7 @@ class ClientController extends Controller
             $data['available_locales'][] = $data['locale'];
         }
         $client->fill($data);
-        if (!Auth::user()->client->is_super_admin && $request->get('modules')) {
+        if (!Auth::user()->role->is_super_admin && $request->get('modules')) {
             $client->modules = $request->get('modules');
         }
 
@@ -111,7 +111,7 @@ class ClientController extends Controller
         if (!$client) {
             abort(404);
         }
-        if (!Auth::user()->client->is_super_admin) {
+        if (!Auth::user()->role->is_super_admin) {
             abort(404);
         }
 

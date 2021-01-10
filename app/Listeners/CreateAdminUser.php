@@ -38,7 +38,7 @@ class CreateAdminUser
 
         $role = Role::firstOrCreate([
             'name' => 'Administrator',
-            'is_admin' => true,
+            'type' => Role::ADMIN,
         ]);
         $role->client_id = $client->id;
         $role->save();

@@ -33,7 +33,7 @@ $links = [
         'route' => 'clients',
         'icon' => 'supervised_user_circle',
         'name' => 'pages.clients',
-        'show' => $user->client->is_super_admin
+        'show' => $user->role->is_super_admin
     ],
     [
         'route' => 'settings',

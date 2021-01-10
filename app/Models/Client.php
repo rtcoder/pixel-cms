@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string locale
  * @property array available_locales
  * @property array modules
- * @property bool is_super_admin
  */
 class Client extends Model
 {
@@ -39,10 +38,6 @@ class Client extends Model
         'created' => ClientCreated::class
     ];
 
-    protected $appends = [
-        'is_super_admin',
-    ];
-
     protected $guarded = [
         'slug',
         'modules',
@@ -53,8 +48,4 @@ class Client extends Model
         return $this->hasMany(User::class);
     }
 
-    public function getIsSuperAdminAttribute(): bool
-    {
-        return $this->slug === 'developer';
-    }
 }

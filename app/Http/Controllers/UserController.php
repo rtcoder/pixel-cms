@@ -21,7 +21,7 @@ class UserController extends Controller
         $tableParams = new TableParamsHelper($request);
         $authUser = Auth::user();
         $users = User::query();
-        if (!$authUser->client->is_super_admin || !$tableParams->client_id) {
+        if (!$authUser->role->is_super_admin || !$tableParams->client_id) {
             $users = $users->where('client_id', $authUser->client_id);
         } else {
             $users = $users->where('client_id', $tableParams->client_id);

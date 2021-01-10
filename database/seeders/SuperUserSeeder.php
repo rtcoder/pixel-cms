@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Events\UserCreated;
+use App\Helpers\Helpers;
 use App\Models\Client;
 use App\Models\Role;
 use App\Models\User;
@@ -32,22 +34,24 @@ class SuperUserSeeder extends Seeder
 
         $role = Role::firstOrCreate([
             'name' => 'Administrator',
-            'is_admin' => true,
+            'type' => Role::SUPER_ADMIN,
             'client_id' => $mainClient->id
         ]);
 
         $adminUser = User::where('email', 'dawidjez@gmail.com')->first();
+        $password = Helpers::generatePassword();
         if (!$adminUser) {
             $adminUser = new User();
             $adminUser->fill([
                 'email' => 'dawidjez@gmail.com',
                 'name' => 'Administrator',
-                'password' => bcrypt('i6$!Y@Zal3BpejCYga7A'),
+                'password' => bcrypt($password),
                 'client_id' => $mainClient->id,
                 'role_id' => $role->id,
                 'is_active' => true,
             ]);
             $adminUser->save();
+            event(new UserCreated($adminUser, $password));
         }
     }
 }

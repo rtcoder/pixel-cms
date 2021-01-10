@@ -21,7 +21,7 @@
                 <td>{{ $role->name }}</td>
                 <td>{{ $role->created_at }}</td>
                 <td>
-                    @include('layout.table.table-row-options', ['row' => $role, 'canDelete' => !$role->is_admin])
+                    @include('layout.table.table-row-options', ['row' => $role, 'canDelete' => !$role->is_admin && !$role->is_super_admin])
                 </td>
             </tr>
         @endforeach

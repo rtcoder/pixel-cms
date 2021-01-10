@@ -21,11 +21,11 @@ class PermissionsHelper
         if ($roleHasPermission) {
             $roleHasPermission = $user->role->permissions[$key]['can'][$action];
         }
-        return self::clientHasPermission($user, $module) && ($user->role->is_admin || $roleHasPermission);
+        return self::clientHasPermission($user, $module) && ($user->role->is_admin || $user->role->is_super_admin || $roleHasPermission);
     }
 
     public static function clientHasPermission(User $user, int $module): bool
     {
-        return $user->client->is_super_admin || in_array($module, $user->client->modules);
+        return $user->role->is_super_admin || in_array($module, $user->client->modules);
     }
 }

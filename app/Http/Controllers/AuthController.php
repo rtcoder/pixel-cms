@@ -47,7 +47,7 @@ class AuthController extends Controller
 
     public function loginAs(int $id): RedirectResponse
     {
-        if (!Auth::user()->client->is_super_admin)
+        if (!Auth::user()->role->is_super_admin)
             abort(403);
 
         Auth::loginUsingId($id);
