@@ -78,7 +78,7 @@ class RoleController extends Controller
         $data = $request->all();
         $data['permissions'] = $this->parsePermissions($data['permissions']);
         $role = new Role();
-        $role->fill($request->all());
+        $role->fill($data);
         $role->client_id = Auth::user()->client_id;
         $role->save();
 
@@ -95,7 +95,9 @@ class RoleController extends Controller
         if (!$role) {
             abort(404);
         }
-        $role->fill($request->all());
+        $data = $request->all();
+        $data['permissions'] = $this->parsePermissions($data['permissions']);
+        $role->fill($data);
         $role->save();
         return redirect()->route('roles');
     }

@@ -16,12 +16,9 @@ class PermissionsHelper
      */
     public static function roleHasPermission(User $user, int $module, $action = 'view'): bool
     {
-        $key = array_search($module, array_column($user->role->permissions, 'module'));
-        $roleHasPermission = $key !== false;
-        if ($roleHasPermission) {
-            $roleHasPermission = $user->role->permissions[$key]['can'][$action];
-        }
-        return self::clientHasPermission($user, $module) && ($user->role->is_admin || $user->role->is_super_admin || $roleHasPermission);
+        $roleHasPermission = isset($user->role->permissions[$module][$action]);
+        return self::clientHasPermission($user, $module)
+            && ($user->role->is_admin || $user->role->is_super_admin || $roleHasPermission);
     }
 
     public static function clientHasPermission(User $user, int $module): bool
