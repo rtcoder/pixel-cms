@@ -30,10 +30,6 @@ class ClientController extends Controller
 
         $clients = $clients->paginate($per_page, ['*'], 'page', $tableParams->page_number);
 
-        foreach ($clients->items() as $item) {
-            TableParamsHelper::filterResponseAttributes($item, $request->get('attributes'), Client::class);
-        }
-
         return view('pages.clients.clients-list', [
             'clients' => $clients,
             'searchTerm' => $tableParams->search_term
@@ -50,13 +46,7 @@ class ClientController extends Controller
 
     public function edit(int $id)
     {
-        $client = Client::where([
-            'id' => $id,
-        ])->first();
-
-        if (!$client) {
-            abort(404);
-        }
+        $client = $this->getResourceById(Client::class, $id, false);
         return view('pages.clients.single-client', [
             'client' => $client,
             'modulesNames' => Module::MODULES_PAGE_NAMES,
@@ -81,15 +71,9 @@ class ClientController extends Controller
 
     public function update(ClientRequest $request, int $id): RedirectResponse
     {
-        $client = Client::where([
-            'id' => $id,
-        ])->first();
-
-        if (!$client) {
-            abort(404);
-        }
+        $client = $this->getResourceById(Client::class, $id, false);
         $data = $request->all();
-        $data['available_locales']=[];
+        $data['available_locales'] = [];
         if (!count($data['available_locales'])) {
             $data['available_locales'][] = $data['locale'];
         }
@@ -104,17 +88,7 @@ class ClientController extends Controller
 
     public function destroy(int $id): RedirectResponse
     {
-        $client = Client::where([
-            'id' => $id,
-        ])->first();
-
-        if (!$client) {
-            abort(404);
-        }
-        if (!Auth::user()->role->is_super_admin) {
-            abort(404);
-        }
-
+        $client = $this->getResourceById(Client::class, $id, false);
         $client->delete();
         return redirect()->route('clients');
     }

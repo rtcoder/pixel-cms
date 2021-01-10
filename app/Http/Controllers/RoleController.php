@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\PermissionsHelper;
 use App\Helpers\TableParamsHelper;
 use App\Http\Requests\RoleRequest;
 use App\Models\Module;
@@ -35,10 +34,6 @@ class RoleController extends Controller
 
         $roles = $roles->paginate($per_page, ['*'], 'page', $tableParams->page_number);
 
-        foreach ($roles->items() as $item) {
-            TableParamsHelper::filterResponseAttributes($item, $request->get('attributes'), Role::class);
-        }
-
         return view('pages.roles.roles-list', [
             'roles' => $roles,
             'searchTerm' => $tableParams->search_term
@@ -56,14 +51,7 @@ class RoleController extends Controller
 
     public function edit(int $id)
     {
-        $role = Role::where([
-            'id' => $id,
-            'client_id' => Auth::user()->client_id
-        ])->first();
-
-        if (!$role) {
-            abort(404);
-        }
+        $role = $this->getResourceById(Role::class, $id);
 
         return view('pages.roles.single-role', [
             'role' => $role,
@@ -87,14 +75,7 @@ class RoleController extends Controller
 
     public function update(RoleRequest $request, int $id): RedirectResponse
     {
-        $role = Role::where([
-            'id' => $id,
-            'client_id' => Auth::user()->client_id
-        ])->first();
-
-        if (!$role) {
-            abort(404);
-        }
+        $role = $this->getResourceById(Role::class, $id);
         $data = $request->all();
         $data['permissions'] = $this->parsePermissions($data['permissions']);
         $role->fill($data);
@@ -104,14 +85,7 @@ class RoleController extends Controller
 
     public function destroy(int $id): RedirectResponse
     {
-        $role = Role::where([
-            'id' => $id,
-            'client_id' => Auth::user()->client_id
-        ])->first();
-
-        if (!$role) {
-            abort(404);
-        }
+        $role = $this->getResourceById(Role::class, $id);
         $role->delete();
         return redirect()->route('roles');
     }

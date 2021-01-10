@@ -51,10 +51,6 @@ class ContactController extends Controller
 
         $contacts = $contacts->paginate($per_page, ['*'], 'page', $tableParams->page_number);
 
-        foreach ($contacts->items() as $item) {
-            TableParamsHelper::filterResponseAttributes($item, $request->get('attributes'), Contact::class);
-        }
-
         return view('pages.contacts.contacts-list', [
             'contacts' => $contacts,
             'searchTerm' => $tableParams->search_term
@@ -68,15 +64,7 @@ class ContactController extends Controller
 
     public function edit(int $id)
     {
-        $contact = Contact::where([
-            'id' => $id,
-            'client_id' => Auth::user()->client_id
-        ])->first();
-
-        if (!$contact) {
-            abort(404);
-        }
-
+        $contact = $this->getResourceById(Contact::class, $id);
         return view('pages.contacts.single-contact', [
             'contact' => $contact
         ]);
@@ -97,15 +85,7 @@ class ContactController extends Controller
 
     public function update(ContactRequest $request, int $id): RedirectResponse
     {
-
-        $auth = Auth::user();
-        $contact = Contact::where([
-            'id' => $id,
-            'client_id' => $auth->client_id
-        ])->first();
-        if (!$contact) {
-            abort(404);
-        }
+        $contact = $this->getResourceById(Contact::class, $id);
         $this->updateContactPhoneNumbers($contact, $request->get('phone_numbers'));
         $this->updateContactEmailAddresses($contact, $request->get('email_addresses'));
 
@@ -116,17 +96,7 @@ class ContactController extends Controller
 
     public function destroy(int $id): RedirectResponse
     {
-        $auth = Auth::user();
-        $contact = Contact::where([
-            'id' => $id,
-            'client_id' => $auth->client_id
-        ])->first();
-        if (!$auth->role->is_admin) {
-            abort(403);
-        }
-        if (!$contact) {
-            abort(404);
-        }
+        $contact = $this->getResourceById(Contact::class, $id);
         $contact->delete();
         return redirect()->route('contacts');
     }
@@ -134,44 +104,32 @@ class ContactController extends Controller
     private function updateContactPhoneNumbers(Contact $contact, array $phoneNumbers)
     {
         $contact->phoneNumbers()->delete();
-
-        $phoneNumbers = array_unique(
-            array_map(function ($value) {
-                return $value['value'];
-            }, $phoneNumbers)
-        );
-
-        foreach ($phoneNumbers as $number) {
-            if (!$number) {
-                continue;
-            }
-            $newNumber = new ContactPhoneNumber([
-                'value' => $number
-            ]);
-            $newNumber->contact_id = $contact->id;
-            $newNumber->save();
-        }
+        $this->updateContactRelation($contact, ContactPhoneNumber::class, $phoneNumbers);
     }
 
     private function updateContactEmailAddresses(Contact $contact, array $emailAddresses)
     {
         $contact->emailAddresses()->delete();
+        $this->updateContactRelation($contact, ContactEmailAddress::class, $emailAddresses);
+    }
 
-        $emailAddresses = array_unique(
+    private function updateContactRelation(Contact $contact, string $className, array $data)
+    {
+        $data = array_unique(
             array_map(function ($value) {
                 return $value['value'];
-            }, $emailAddresses)
+            }, $data)
         );
 
-        foreach ($emailAddresses as $email) {
-            if (!$email) {
+        foreach ($data as $item) {
+            if (!$item) {
                 continue;
             }
-            $newEmail = new ContactEmailAddress([
-                'value' => $email
+            $newItem = new $className([
+                'value' => $item
             ]);
-            $newEmail->contact_id = $contact->id;
-            $newEmail->save();
+            $newItem->contact_id = $contact->id;
+            $newItem->save();
         }
     }
 }

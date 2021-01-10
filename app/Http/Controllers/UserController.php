@@ -40,10 +40,6 @@ class UserController extends Controller
 
         $users = $users->paginate($per_page, ['*'], 'page', $tableParams->page_number);
 
-        foreach ($users->items() as $item) {
-            TableParamsHelper::filterResponseAttributes($item, $request->get('attributes'), User::class);
-        }
-//dd($users->toArray());
         return view('pages.users.users-list', [
             'users' => $users,
             'searchTerm' => $tableParams->search_term
@@ -60,15 +56,7 @@ class UserController extends Controller
 
     public function edit(int $id)
     {
-        $user = User::where([
-            'id' => $id,
-            'client_id' => Auth::user()->client_id
-        ])->first();
-
-        if (!$user) {
-            abort(404);
-        }
-
+        $user = $this->getResourceById(User::class, $id);
         $roles = Role::where('client_id', $user->client_id)->get();
         return view('pages.users.single-user', [
             'user' => $user,
@@ -99,40 +87,22 @@ class UserController extends Controller
 
     public function update(UserRequest $request, int $id): RedirectResponse
     {
-        $user = User::where([
-            'id' => $id,
-            'client_id' => Auth::user()->client_id
-        ])->first();
-        if (!$user) {
-            abort(404);
-        }
+        $user = $this->getResourceById(User::class, $id);
         $auth = Auth::user();
         if ($request->get('password'))
             $user->password = Hash::make($request->get('password'));
 
         $user->fill($request->all());
-        if ($auth->role->is_admin && (!$user->role->is_admin || User::where('client_id', $auth->client_id)->whereHas('role', function ($q) {
-                    $q->whereNull('client_id');
-                })->count() > 1)) {
+        if ($auth->role->is_admin || $auth->role->is_super_admin) {
             $user->role_id = $request->get('role_id');
         }
         $user->save();
         return redirect()->route('users');
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id): RedirectResponse
     {
-        $auth = Auth::user();
-        $user = User::where([
-            'id' => $id,
-            'client_id' => $auth->client_id
-        ])->first();
-        if (!$auth->role->is_admin) {
-            abort(403);
-        }
-        if (!$user) {
-            abort(404);
-        }
+        $user = $this->getResourceById(User::class, $id);
         $user->delete();
         return redirect()->route('users');
     }
