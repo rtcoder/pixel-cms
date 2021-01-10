@@ -4,7 +4,7 @@
 @section('content')
     @include('layout.search-form')
 
-    <h1>@lang('pages.contacts')</h1>
+    @include('layout.table.table-title', ['title' => 'pages.contacts'])
     <table>
         <thead>
         <tr>
@@ -18,13 +18,20 @@
         <tbody>
         @foreach($contacts as $contact)
             <tr>
-                <td>ID</td>
-                <td>Name</td>
-                <td>Email</td>
+                <td>{{ $contact->id }}</td>
+                <td>{{ $contact->full_name }}</td>
+                <td>{{ $contact->emailAddresses[0]->value ?? '' }}</td>
                 <td>{{ $contact->created_at }}</td>
-                <td></td>
+                <td>
+                    @include('layout.table.table-row-options', ['row' => $contact])
+                </td>
             </tr>
         @endforeach
         </tbody>
     </table>
+
+    @if(!count($contacts))
+        @include('layout.table.no-data')
+    @endif
+
 @endsection

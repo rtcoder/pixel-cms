@@ -3,7 +3,11 @@
 
 @section('content')
 
-    <h1>@lang('common.edit')</h1>
+    @if($user ?? false)
+        <h1>@lang('common.edit')</h1>
+    @else
+        <h1>@lang('common.add')</h1>
+    @endif
 
     <form action="" method="post">
         @csrf

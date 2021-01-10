@@ -3,9 +3,7 @@
 namespace App\Http\Requests;
 
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ContactRequest extends FormRequest
 {
@@ -23,10 +21,5 @@ class ContactRequest extends FormRequest
             'phone_numbers' => 'array|nullable|max:10',
             'company' => 'string|nullable',
         ];
-    }
-
-    public function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response(['errors' => $validator->errors()], 400));
     }
 }

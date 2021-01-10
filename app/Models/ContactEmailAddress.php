@@ -4,6 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property integer id
+ * @property string value
+ * @property integer contact_id
+ */
 class ContactEmailAddress extends Model
 {
     protected $fillable = [
@@ -11,7 +16,7 @@ class ContactEmailAddress extends Model
     ];
 
     protected $guarded = [
-        'client_id'
+        'contact_id'
     ];
 
 }

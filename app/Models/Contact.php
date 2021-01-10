@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property integer id
+ * @property string first_name
+ * @property string last_name
+ * @property string company
+ * @property integer client_id
+ * @property string full_name
+ */
 class Contact extends Model
 {
     use SoftDeletes;
@@ -17,12 +25,16 @@ class Contact extends Model
     ];
 
     protected $guarded = [
-        'client_id'
+        'client_id',
     ];
 
     protected $with = [
         'phoneNumbers',
         'emailAddresses',
+    ];
+
+    protected $appends=[
+        'full_name',
     ];
 
     public function phoneNumbers(): HasMany
@@ -33,6 +45,11 @@ class Contact extends Model
     public function emailAddresses(): HasMany
     {
         return $this->hasMany(ContactEmailAddress::class);
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        return trim($this->first_name.' '.$this->last_name);
     }
 
 }
