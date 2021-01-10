@@ -55,7 +55,7 @@
                             <td>
                                 <label>
                                     <input type="checkbox"
-                                           @if(isset($permissions[$module][$action]))
+                                           @if(isset($permissions[$module]) && in_array($action, $permissions[$module]))
                                            checked
                                            @endif
                                            name="permissions[{{ $module }}][{{ $action }}]"
