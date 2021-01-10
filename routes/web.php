@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Models\Module;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,41 +20,47 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-function generateUrls(string $path, string $controllerClass, string $name)
+function generateUrls(string $path, string $controllerClass, string $name, int $module)
 {
-    Route::get('/' . $path, [$controllerClass, 'index'])->name($name);
+    Route::get('/' . $path, [$controllerClass, 'index'])->name($name)
+        ->middleware('permission:' . $module);
 
     Route::get('/' . $path . '/add', [$controllerClass, 'add'])
-        ->name($name . '-add');
+        ->name($name . '-add')
+        ->middleware('permission:' . $module . ',' . Module::CREATE_ACTION);
 
     Route::post('/' . $path . '/add', [$controllerClass, 'create'])
-        ->name($name . '-create');
+        ->name($name . '-create')
+        ->middleware('permission:' . $module . ',' . Module::CREATE_ACTION);
 
     Route::get('/' . $path . '/{id}', [$controllerClass, 'edit'])
         ->where('id', '[0-9]+')
-        ->name($name . '-edit');
+        ->name($name . '-edit')
+        ->middleware('permission:' . $module . ',' . Module::EDIT_ACTION);
 
     Route::post('/' . $path . '/{id}', [$controllerClass, 'update'])
         ->where('id', '[0-9]+')
-        ->name($name . '-update');
+        ->name($name . '-update')
+        ->middleware('permission:' . $module . ',' . Module::EDIT_ACTION);
 
     Route::get('/' . $path . '/{id}/delete', [$controllerClass, 'destroy'])
         ->where('id', '[0-9]+')
-        ->name($name . '-delete');
+        ->name($name . '-delete')
+        ->middleware('permission:' . $module . ',' . Module::DELETE_ACTION);
 }
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
-    generateUrls('users', UserController::class, 'users');
-    generateUrls('roles', RoleController::class, 'roles');
-    generateUrls('clients', UserController::class, 'clients');
+    generateUrls('users', UserController::class, 'users', Module::USERS_MODULE);
+    generateUrls('roles', RoleController::class, 'roles', Module::ROLES_MODULE);
+    generateUrls('contacts', ContactController::class, 'contacts', Module::CONTACTS_MODULE);
 
     Route::get('/settings', [HomeController::class, 'index'])->name('settings');
 });
 
 Route::middleware('superadmin')->group(function () {
-    generateUrls('contacts', ContactController::class, 'contacts');
+    generateUrls('clients', ClientController::class, 'clients',Module::CLIENTS_MODULE);
 
     Route::get('/login-as/{id}', [AuthController::class, 'loginAs'])
         ->where('id', '[0-9]+')->name('login-as');

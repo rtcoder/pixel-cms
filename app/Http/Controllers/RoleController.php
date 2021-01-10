@@ -16,9 +16,6 @@ class RoleController extends Controller
 
     public function index(Request $request)
     {
-        if (!PermissionsHelper::roleHasPermission(Auth::user(), Module::ROLES_MODULE)) {
-            abort(403);
-        }
         $auth = Auth::user();
         $tableParams = new TableParamsHelper($request);
 

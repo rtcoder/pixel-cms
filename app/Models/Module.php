@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Module extends Model
 {
+    const CLIENTS_MODULE = 0;
     const USERS_MODULE = 1;
     const ROLES_MODULE = 2;
     const CONTACTS_MODULE = 3;

@@ -30,6 +30,7 @@ body {
     font-family: 'Nunito', sans-serif;
     background: var(--backgroundColor);
     color: var(--fontColor);
+    width: 100%;
 }
 
 .wrapper {

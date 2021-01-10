@@ -5,8 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a967dc70-7b2d-4f9e-8db6-5f18eeedd887" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Middleware/ModulePermission.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/errors/error.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Helpers/PermissionsHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/PermissionsHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ClientController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ClientController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RoleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RoleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Client.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Client.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Module.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Module.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Policies/ClientPolicy.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layout/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,18 +159,18 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/lang/pl" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/errors" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\dawid\projects\pixel-cms\resources\views\errors" />
+      <recent name="C:\Users\dawid\projects\pixel-cms\app\Http\Middleware" />
       <recent name="C:\Users\dawid\projects\pixel-cms\resources\lang\pl" />
       <recent name="C:\Users\dawid\projects\pixel-cms\resources\lang\en" />
       <recent name="C:\Users\dawid\projects\pixel-cms\resources\views\pages" />
-      <recent name="C:\Users\dawid\projects\pixel-cms\resources\views\pages\contacts" />
-      <recent name="C:\Users\dawid\projects\pixel-cms\resources\views\layout\table" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\dawid\projects\pixel-cms\pixel2\pixel-cms\app\Http" />
@@ -196,7 +207,7 @@
       <option name="presentableId" value="Default" />
       <updated>1610129412667</updated>
       <workItem from="1610129414791" duration="20322000" />
-      <workItem from="1610202207345" duration="25829000" />
+      <workItem from="1610202207345" duration="29424000" />
     </task>
     <task id="LOCAL-00001" summary="full project in laravel">
       <created>1610202323295</created>
@@ -226,7 +237,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610291363249</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="edit permission">
+      <created>1610291916737</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1610291916737</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -249,6 +267,7 @@
     <MESSAGE value="users" />
     <MESSAGE value="contacts" />
     <MESSAGE value="roles" />
-    <option name="LAST_COMMIT_MESSAGE" value="roles" />
+    <MESSAGE value="edit permission" />
+    <option name="LAST_COMMIT_MESSAGE" value="edit permission" />
   </component>
 </project>
