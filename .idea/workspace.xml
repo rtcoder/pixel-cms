@@ -5,20 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a967dc70-7b2d-4f9e-8db6-5f18eeedd887" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/lang/en/permissions.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/pl/permissions.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/pages/roles/roles-list.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/pages/roles/single-role.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RoleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RoleController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/RoleRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/RoleRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Module.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Module.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Role.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Role.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Policies/RolePolicy.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeders/SuperUserSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/SuperUserSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/common.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/common.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/pl/common.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/pl/common.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helpers/PermissionsHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/PermissionsHelper.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +196,7 @@
       <option name="presentableId" value="Default" />
       <updated>1610129412667</updated>
       <workItem from="1610129414791" duration="20322000" />
-      <workItem from="1610202207345" duration="25000000" />
+      <workItem from="1610202207345" duration="25829000" />
     </task>
     <task id="LOCAL-00001" summary="full project in laravel">
       <created>1610202323295</created>
@@ -231,7 +219,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610280322176</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="roles">
+      <created>1610291363249</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1610291363249</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -253,6 +248,7 @@
     <MESSAGE value="full project in laravel" />
     <MESSAGE value="users" />
     <MESSAGE value="contacts" />
-    <option name="LAST_COMMIT_MESSAGE" value="contacts" />
+    <MESSAGE value="roles" />
+    <option name="LAST_COMMIT_MESSAGE" value="roles" />
   </component>
 </project>

@@ -11,7 +11,7 @@ class PermissionsHelper
     /**
      * @param User $user
      * @param int $module
-     * @param 'view' | 'create' | 'delete' $action
+     * @param 'view' | 'create' | 'edit' | 'delete' $action
      * @return bool
      */
     public static function roleHasPermission(User $user, int $module, $action = 'view'): bool
