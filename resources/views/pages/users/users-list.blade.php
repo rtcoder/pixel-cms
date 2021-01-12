@@ -2,9 +2,7 @@
 @section('title', __('pages.users'))
 
 @section('content')
-    @include('layout.search-form')
-
-    @include('layout.table.table-title', ['title' => 'pages.users'])
+    @include('layout.table.table-top', ['title' => 'pages.users'])
     <table>
         <thead>
         <tr>

@@ -1,4 +1,4 @@
-<form action="" method="get">
+<form action="" method="get" class="search-form">
     <input type="text"
            placeholder="@lang('common.search')"
            name="searchTerm"

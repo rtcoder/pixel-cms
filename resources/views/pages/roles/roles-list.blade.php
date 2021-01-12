@@ -2,9 +2,7 @@
 @section('title', __('pages.contacts'))
 
 @section('content')
-    @include('layout.search-form')
-
-    @include('layout.table.table-title', ['title' => 'pages.roles'])
+    @include('layout.table.table-top', ['title' => 'pages.roles'])
     <table>
         <thead>
         <tr>
