@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 /**
  * @property integer id
@@ -17,6 +18,7 @@ use Illuminate\Notifications\Notifiable;
  * @property bool is_active
  * @property integer client_id
  * @property integer role_id
+ * @property string api_token
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -31,7 +33,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $guarded = [
         'client_id',
-        'role_id'
+        'role_id',
+        'api_token',
     ];
 
     protected $hidden = [
@@ -56,5 +59,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            $model->api_token = hash('sha256', Str::random(60));
+        });
     }
 }
