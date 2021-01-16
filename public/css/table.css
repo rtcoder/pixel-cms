@@ -1,62 +1,62 @@
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 th, td {
-    padding: 10px;
+  padding: 10px;
 }
 
 th {
-    text-align: left;
-    border-bottom: 2px solid #000;
+  text-align: left;
+  border-bottom: 2px solid #000;
 }
 
 td {
-    border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
 
 th.id-column {
-    width: 50px;
+  width: 50px;
 }
 
 tbody tr:hover {
-    background: #f3f3f3;
+  background: #f3f3f3;
 }
 
 td .row-options .edit,
 td .row-options .delete {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 td .row-options .edit {
-    color: var(--primaryColor);
+  color: var(--primaryColor);
 }
 
 td .row-options .delete {
-    color: var(--dangerColor);
+  color: var(--dangerColor);
 }
 
 .table-title {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .table-title button.add-btn {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background: var(--primaryColor);
-    color: #ffffff;
-    border: 1px solid var(--accentColor);
-    line-height: 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: var(--primaryColor);
+  color: #ffffff;
+  border: 1px solid var(--accentColor);
+  line-height: 24px;
 }
 
 .no-data {
-    color: var(--mutedColor);
-    text-align: center;
-    padding: 20px;
-    font-size: 30px;
+  color: var(--mutedColor);
+  text-align: center;
+  padding: 20px;
+  font-size: 30px;
 }

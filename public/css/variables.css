@@ -1,24 +1,24 @@
 body {
-    /*general*/
-    --backgroundColor: #ffffff;
-    --fontColor: #1a1a1a;
-    --shadowColor: #888;
-    --labelColor: #a1a1a1;
-    --snackbarBackground: #2f2f2f;
-    --snackbarFontColor: #dedede;
-    --primaryColor: #066cb6;
-    --accentColor: #00b2dd;
-    --mutedColor: #787878;
-    --warningColor: #ffa41a;
-    --dangerColor: #cc231b;
-    /*sidebar*/
-    --sidebarFontColor: #4c4c4c;
-    --sidebarWidth: 200px;
-    --sidebarSmallWidth: 60px;
+  /*general*/
+  --backgroundColor: #ffffff;
+  --fontColor: #1a1a1a;
+  --shadowColor: #888;
+  --labelColor: #a1a1a1;
+  --snackbarBackground: #2f2f2f;
+  --snackbarFontColor: #dedede;
+  --primaryColor: #066cb6;
+  --accentColor: #00b2dd;
+  --mutedColor: #787878;
+  --warningColor: #ffa41a;
+  --dangerColor: #cc231b;
+  /*sidebar*/
+  --sidebarFontColor: #4c4c4c;
+  --sidebarWidth: 200px;
+  --sidebarSmallWidth: 60px;
 
-    /*header*/
-    --headerBackground: #fff;
-    --breadcrumbsColor: #000;
-    --breadcrumbsArrowColor: #ccc;
-    --headerHeight: 70px;
+  /*header*/
+  --headerBackground: #fff;
+  --breadcrumbsColor: #000;
+  --breadcrumbsArrowColor: #ccc;
+  --headerHeight: 70px;
 }
