@@ -30,6 +30,12 @@ $links = [
         'show' => PermissionsHelper::roleHasPermission($user, Module::ROLES_MODULE)
     ],
     [
+        'route' => 'documents',
+        'icon' => 'text_snippet',
+        'name' => 'pages.documents',
+        'show' => PermissionsHelper::roleHasPermission($user, Module::DOCUMENTS_MODULE)
+    ],
+    [
         'route' => 'clients',
         'icon' => 'supervised_user_circle',
         'name' => 'pages.clients',

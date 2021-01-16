@@ -28,7 +28,7 @@ class Module
         self::USERS_MODULE,
         self::ROLES_MODULE,
         self::CONTACTS_MODULE,
-//        self::DOCUMENTS_MODULE,
+        self::DOCUMENTS_MODULE,
 //        self::WWW_MODULE,
 //        self::MAILING_MODULE
     ];
@@ -37,7 +37,7 @@ class Module
         self::USERS_MODULE => 'pages.users',
         self::ROLES_MODULE => 'pages.roles',
         self::CONTACTS_MODULE => 'pages.contacts',
-//        self::DOCUMENTS_MODULE => 'pages.documents',
+        self::DOCUMENTS_MODULE => 'pages.documents',
 //        self::WWW_MODULE => 'pages.website',
 //        self::MAILING_MODULE => 'pages.mailing'
     ];

@@ -19,4 +19,5 @@ return [
     'roles' => 'Role',
     'clients' => 'Klienci',
     'settings' => 'Ustawienia',
+    'documents' => 'Dokumenty',
 ];
