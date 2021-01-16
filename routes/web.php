@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ContactController;
@@ -67,6 +68,9 @@ Route::middleware('superadmin')->group(function () {
     Route::get('/login-as/{id}', [AuthController::class, 'loginAs'])
         ->where('id', '[0-9]+')->name('login-as');
 });
+
+//Media
+Route::get('/client/storage/{name}', [MediaController::class, 'show']);
 
 //AUTH
 Route::get('/login', function () {
