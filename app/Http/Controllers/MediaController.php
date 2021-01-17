@@ -1,33 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Helpers\MediaHelper;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\MediaRequest;
+use App\Helpers\Media\ImageHelper;
 use App\Models\Media;
 use App\Models\MediaSizes;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Throwable;
 
 class MediaController extends Controller
 {
-    public function store(MediaRequest $request)
+    public function index()
     {
-        $client_id = Auth::guard('api')->user()->client_id;
-        try {
-            $media = MediaHelper::storeMedia($request->file('file'), $client_id);
-
-            return response(['url' => $media->url], 201);
-        } catch (Throwable $error) {
-            return response(['error' => $error->getMessage(), 'trace' => $error->getTrace()], 500);
-        }
+        $client_id = Auth::user()->client_id;
+        $media = Media::where('client_id', $client_id)->orderBy('id', 'desc')->get();
+        return view('pages.media.media-list', [
+            'media' => $media
+        ]);
     }
 
-    public function show(Request $request, string $name): BinaryFileResponse
+    public function show(Request $request, string $name)//: BinaryFileResponse
     {
         /**
          * @var Media $media
@@ -46,7 +40,7 @@ class MediaController extends Controller
         if ($request->get('x') || $request->get('y')) {
             $sizes = new MediaSizes($request->get('x'), $request->get('y'));
             try {
-                $filepath = MediaHelper::getResizedOrCreate($media, $sizes, false);
+                $filepath = ImageHelper::getResizedOrCreate($media, $sizes, false);
             } catch (Exception $exception) {
                 $filepath = public_path() . "/storage/media/" . $name;
             }

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\MediaController;
+use App\Http\Controllers\Api\ApiMediaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +18,4 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::middleware('api')->post('/media', [MediaController::class, 'store']);
+Route::middleware('api')->post('/media', [ApiMediaController::class, 'store']);

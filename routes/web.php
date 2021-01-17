@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Models\Module;
@@ -58,6 +58,8 @@ Route::middleware('auth')->group(function () {
     generateUrls('roles', RoleController::class, 'roles', Module::ROLES_MODULE);
     generateUrls('contacts', ContactController::class, 'contacts', Module::CONTACTS_MODULE);
     generateUrls('documents', DocumentController::class, 'documents', Module::DOCUMENTS_MODULE);
+
+    Route::get('/media', [MediaController::class, 'index'])->name('media');
 
     Route::get('/settings', [HomeController::class, 'index'])->name('settings');
 });

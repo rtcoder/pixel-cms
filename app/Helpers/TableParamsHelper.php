@@ -6,15 +6,39 @@ use Illuminate\Http\Request;
 
 class TableParamsHelper
 {
-
+    /**
+     * @var string
+     */
     public $column = 'id';
+    /**
+     * @var string
+     */
     public $direction = 'asc';
+    /**
+     * @var int
+     */
     public $page_number = 1;
+    /**
+     * @var int
+     */
     public $limit = 10;
+    /**
+     * @var string
+     */
     public $search_term = '';
+    /**
+     * @var int|null
+     */
     public $client_id = null;
+    /**
+     * @var int|null
+     */
     public $user_id = null;
 
+    /**
+     * TableParamsHelper constructor.
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->column = $request->get('column') ? $request->get('column') : 'id';

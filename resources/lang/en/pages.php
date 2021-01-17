@@ -13,12 +13,12 @@ return [
     |
     */
 
-    'dashboard' => 'Kokpit',
-    'users' => 'Użytkownicy',
-    'contacts' => 'Kontakty',
-    'roles' => 'Role',
-    'clients' => 'Klienci',
-    'settings' => 'Ustawienia',
-    'documents' => 'Dokumenty',
+    'dashboard' => 'Dashboard',
+    'users' => 'Users',
+    'contacts' => 'Contacts',
+    'roles' => 'Roles',
+    'clients' => 'Clients',
+    'settings' => 'Settings',
+    'documents' => 'Documents',
     'media' => 'Media',
 ];

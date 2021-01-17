@@ -36,6 +36,12 @@ $links = [
         'show' => PermissionsHelper::roleHasPermission($user, Module::DOCUMENTS_MODULE)
     ],
     [
+        'route' => 'media',
+        'icon' => 'perm_media',
+        'name' => 'pages.media',
+        'show' => true
+    ],
+    [
         'route' => 'clients',
         'icon' => 'supervised_user_circle',
         'name' => 'pages.clients',

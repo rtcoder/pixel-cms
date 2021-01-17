@@ -44,7 +44,7 @@ td .row-options .delete {
   justify-content: space-between;
 }
 
-.table-title button.add-btn {
+.add-btn {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -52,6 +52,8 @@ td .row-options .delete {
   color: #ffffff;
   border: 1px solid var(--accentColor);
   line-height: 24px;
+  cursor: pointer;
+  width: auto;
 }
 
 .no-data {
