@@ -16,6 +16,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string locale
  * @property array available_locales
  * @property array modules
+ * @property User[] users
+ * @property Contact[] contacts
+ * @property Document[] documents
+ * @property Role[] roles
  */
 class Client extends Model
 {
@@ -46,6 +50,21 @@ class Client extends Model
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
+    }
+
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class);
+    }
+
+    public function documents(): HasMany
+    {
+        return $this->hasMany(Document::class);
+    }
+
+    public function roles(): HasMany
+    {
+        return $this->hasMany(Role::class);
     }
 
 }

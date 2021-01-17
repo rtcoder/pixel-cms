@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string company
  * @property integer client_id
  * @property string full_name
+ * @property ContactPhoneNumber[] phoneNumbers
+ * @property ContactEmailAddress[] emailAddresses
  */
 class Contact extends Model
 {

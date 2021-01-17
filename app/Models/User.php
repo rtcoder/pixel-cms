@@ -17,7 +17,9 @@ use Illuminate\Support\Str;
  * @property string password
  * @property bool is_active
  * @property integer client_id
+ * @property Client client
  * @property integer role_id
+ * @property Role role
  * @property string api_token
  */
 class User extends Authenticatable implements MustVerifyEmail
