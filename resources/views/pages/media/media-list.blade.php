@@ -20,18 +20,19 @@
                         <img src="{{ $item->thumbnails_urls[0] }}" alt="{{ $item->filename }}">
                         @break
                         @case('video')
-                        <span class="material-icons">movie</span>
+                        <img src="{{ $item->thumbnails_urls[0] }}" alt="{{ $item->filename }}">
                         @break
                         @case('application')
                         <span class="material-icons">insert_drive_file</span>
                         @break
                         @case('audio')
-                        <span class="material-icons">music_note</span>
+                        <img src="{{ $item->thumbnails_urls[0] }}" alt="{{ $item->filename }}">
                         @break
 
                     @endswitch
                 </div>
-                {{ $item->readable_type }}
+                <p class="ellipsis" title="{{ $item->original_name }}">{{ $item->original_name }}</p>
+                <p>{{ $item->readable_type }}</p>
             </div>
         @endforeach
     </div>
@@ -191,17 +192,50 @@
                             document.querySelector(`.item#${index} .val`).innerHTML = percent;
 
                             if (loaded === total) {
-                                document.querySelector(`.item#${index} .layer`).remove();
+                                document.querySelector(`.item#${index} .val`).innerHTML = 'przetwarzanie';
                             }
                         },
-                        onAbort: ev => {
+                        onAbort: () => {
                             document.querySelector(`.item#${index}`).remove();
+                        },
+                        onLoad: () => {
+                            document.querySelector(`.item#${index} .layer`).remove();
+                            const result = requests[index].response;
+                            const {
+                                readable_type,
+                                thumbnails_urls,
+                                original_name
+                            } = result;
+                            let placeholder = '';
+                            const type = result.type.split('/')[0];
+                            switch (type) {
+                                case 'image':
+                                case 'video':
+                                case 'audio':
+                                    placeholder = `<img src="${thumbnails_urls[0]}">`;
+                                    break;
+                                case 'application':
+                                    placeholder = `<span class="material-icons">insert_drive_file</span>`;
+                                    break;
+                            }
+                            document.querySelector(`.item#${index} .img-container`).innerHTML = placeholder;
+                            const itemDiv = document.querySelector(`.item#${index}`);
+                            itemDiv.innerHTML = itemDiv.innerHTML + `
+                            <p class="ellipsis" title="${original_name}">${original_name}</p>
+                            <p>${readable_type}</p>
+                            `;
                         }
                     })
                 };
 
                 reader.readAsDataURL(file);
             })
-        })
+        });
     </script>
+
+
+
+
+
+
 @endsection

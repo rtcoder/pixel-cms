@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer size
  * @property integer client_id
  * @property bool is_public
+ * @property string|null duration
+ * @property string|null readable_duration
  */
 class Media extends Model
 {
@@ -69,14 +71,17 @@ class Media extends Model
 
     public function getReadableTypeAttribute(): string
     {
-        $types = [
-            'image/jpeg' => __('media-types.image'),
-            'image/jpg' => __('media-types.image'),
-            'image/gif' => __('media-types.gif'),
-            'image/bmp' => __('media-types.bitmap'),
-            'image/png' => __('media-types.image'),
-            'video/mp4' => __('media-types.video'),
-        ];
-        return $types[$this->type] ?? $this->type;
+        return isset(MediaTypes::NAMES_BY_TYPE[$this->type])
+            ? __(MediaTypes::NAMES_BY_TYPE[$this->type])
+            : $this->type;
+    }
+
+    public function getReadableDurationAttribute(): ?string
+    {
+        if (is_null($this->duration)) {
+            return null;
+        }
+
+        return '--:--';
     }
 }

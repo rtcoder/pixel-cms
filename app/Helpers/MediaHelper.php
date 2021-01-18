@@ -6,6 +6,9 @@ namespace App\Helpers;
 use App\Helpers\Media\ImageHelper;
 use App\Models\Media;
 use Carbon\Carbon;
+use FFMpeg\Coordinate\TimeCode;
+use FFMpeg\FFMpeg;
+use FFMpeg\FFProbe;
 use Illuminate\Http\UploadedFile;
 use ImagickException;
 
@@ -42,7 +45,8 @@ class MediaHelper
         }
         $type = explode('/', $file->getClientMimeType());
         $extension = $file->getClientOriginalExtension();
-        $filename = Carbon::now()->format('Y-m-d_H-i-s-u') . '.' . $extension;
+        $filenameWithoutExt = Carbon::now()->format('Y-m-d_H-i-s-u');
+        $filename = $filenameWithoutExt . '.' . $extension;
 
         $media = new Media();
         $media->client_id = $client_id;
@@ -57,12 +61,6 @@ class MediaHelper
         // Mime type filter should be added here in the future
         switch ($type[0]) {
             case 'image':
-                $dimensions = getimagesize(MediaHelper::getMediaStoragePath($filename));
-                $media->dimensions = $dimensions ? ['width' => $dimensions[0], 'height' => $dimensions[1]] : [];
-                $media->thumbnails = [
-                    $media->filename . '?x=200'
-                ];
-
                 if ($file->getClientMimeType() == 'image/x-icon') {
                     $file->storeAs('media', $filename, 'public');
                 } else {
@@ -71,6 +69,80 @@ class MediaHelper
                     $imagick->setFilename($filename);
                     $imagick->writeImage(MediaHelper::getMediaStoragePath($filename));
                 }
+
+                $dimensions = getimagesize(MediaHelper::getMediaStoragePath($filename));
+                $media->dimensions = $dimensions ? ['width' => $dimensions[0], 'height' => $dimensions[1]] : [];
+                $media->thumbnails = [
+                    $media->filename . '?x=200'
+                ];
+                break;
+            case 'video':
+                $file->storeAs('media', $filename, 'public');
+
+
+                $ffmpeg = FFMpeg::create();
+                $video = $ffmpeg->open(MediaHelper::getMediaStoragePath($filename));
+                $ffProbe = FFProbe::create();
+
+                $videoStream = $ffProbe
+                    ->streams(MediaHelper::getMediaStoragePath($filename))
+                    ->videos()
+                    ->first();
+
+                $dimensions = $videoStream->getDimensions();
+                $duration = $videoStream->get('duration');
+                $media->duration = $duration;
+
+                $step = $duration / 5;
+                $thumbnails = [];
+                if (!file_exists(MediaHelper::getMediaStoragePath($filenameWithoutExt))) {
+                    mkdir(MediaHelper::getMediaStoragePath($filenameWithoutExt), 0777, true);
+                }
+
+                for ($i = 1; $i <= 5; $i++) {
+                    $thumbName = $filenameWithoutExt . '/frame_' . $i . '.jpg';
+                    $thumbnails[] = $thumbName;
+                    $video
+                        ->frame(TimeCode::fromSeconds($step * $i))
+                        ->save(MediaHelper::getMediaStoragePath($thumbName));
+                }
+
+
+                $media->dimensions = $dimensions ? [
+                    'width' => $dimensions->getWidth(),
+                    'height' => $dimensions->getHeight()
+                ] : [];
+                $media->thumbnails = $thumbnails;
+
+                break;
+            case 'audio':
+                $file->storeAs('media', $filename, 'public');
+
+
+                $ffmpeg = FFMpeg::create();
+                $audio = $ffmpeg->open(MediaHelper::getMediaStoragePath($filename));
+                $ffProbe = FFProbe::create();
+
+                $audioStream = $ffProbe
+                    ->streams(MediaHelper::getMediaStoragePath($filename))
+                    ->audios()
+                    ->first();
+
+                $media->duration = $audioStream->get('duration');
+
+                if (!file_exists(MediaHelper::getMediaStoragePath($filenameWithoutExt))) {
+                    mkdir(MediaHelper::getMediaStoragePath($filenameWithoutExt), 0777, true);
+                }
+
+                $thumbName = $filenameWithoutExt . '/waveform.png';
+                $thumbnails = [$thumbName];
+                $audio->waveform(640, 120, ['#0099cc'])
+                    ->save(MediaHelper::getMediaStoragePath($thumbName));
+
+
+                $media->dimensions = [];
+                $media->thumbnails = $thumbnails;
+
                 break;
             default:
                 $file->storeAs('media', $filename, 'public');

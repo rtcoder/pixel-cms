@@ -8,6 +8,7 @@ use App\Models\MediaSizes;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class MediaController extends Controller
@@ -21,8 +22,27 @@ class MediaController extends Controller
         ]);
     }
 
-    public function show(Request $request, string $name)//: BinaryFileResponse
+    public function show(Request $request, string $name): BinaryFileResponse
     {
+        if (Str::contains($name, '/')) {
+            $filepath = public_path() . "/storage/media/" . $name;
+
+            [$name, $subName] = explode('/', $name);
+
+            /**
+             * @var Media $media
+             */
+            $media = Media::where([
+                ['filename', 'like', "$name%"],
+                ['is_public', true]
+            ])->first();
+
+            if (!$media) {
+                abort(404);
+            }
+            $headers = array('Content-Type: ' . $media->type);
+            return response()->file($filepath, $headers);
+        }
         /**
          * @var Media $media
          */

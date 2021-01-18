@@ -72,7 +72,7 @@ Route::middleware('superadmin')->group(function () {
 });
 
 //Media
-Route::get('/client/storage/{name}', [MediaController::class, 'show']);
+Route::get('/client/storage/{name}', [MediaController::class, 'show'])->where('name', '(.*)');;
 
 //AUTH
 Route::get('/login', function () {

@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "ext-imagick": "*",
         "barryvdh/laravel-debugbar": "^3.5",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -16,7 +17,7 @@
         "laracasts/flash": "^3.2",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
-      "ext-imagick": "*"
+        "pbmedia/laravel-ffmpeg": "^7.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
