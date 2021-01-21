@@ -6,12 +6,16 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  z-index: 4;
 }
 
 .alert {
   padding: 15px;
   margin-bottom: 10px;
-  border-radius: 4px
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .alert .close {
@@ -22,10 +26,13 @@
   height: 20px;
   border-radius: 20px;
   border: 1px solid transparent;
-  padding: 0;
+  padding: 3px;
   background: transparent;
   box-sizing: content-box;
   outline-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .alert .close:hover {

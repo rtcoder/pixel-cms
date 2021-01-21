@@ -5,24 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a967dc70-7b2d-4f9e-8db6-5f18eeedd887" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Models/MediaTypes.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/public/ckeditor/plugins/insert-image-from-system.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/public/css/modal.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/en/media-types.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/pl/media-types.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/resources/views/layout/modals/example-modal.blade.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/resources/views/layout/modals/insert-image-from-system.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/pixel-cms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pixel-cms.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Events/MediaDeleting.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Helpers/MediaHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/MediaHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MediaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Listeners/DeleteMediaFile.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Media.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Media.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/logging.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/logging.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/flash.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/flash.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/media/media-list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/media/media-list.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vendor/flash/message.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vendor/flash/message.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -173,7 +172,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/lang/pl" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/storage/logs/laravel.log" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
@@ -232,7 +232,8 @@
       <workItem from="1610820688407" duration="13327000" />
       <workItem from="1610879877111" duration="3383000" />
       <workItem from="1610883306824" duration="5038000" />
-      <workItem from="1610889006810" duration="17980000" />
+      <workItem from="1610889006810" duration="25940000" />
+      <workItem from="1611251161064" duration="137000" />
     </task>
     <task id="LOCAL-00001" summary="full project in laravel">
       <created>1610202323295</created>
@@ -381,7 +382,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610887143351</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="upload many media types">
+      <created>1610956826502</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1610956826502</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -418,6 +426,7 @@
     <MESSAGE value="annotations and relations" />
     <MESSAGE value="Media" />
     <MESSAGE value="remove npm dependencies" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove npm dependencies" />
+    <MESSAGE value="upload many media types" />
+    <option name="LAST_COMMIT_MESSAGE" value="upload many media types" />
   </component>
 </project>

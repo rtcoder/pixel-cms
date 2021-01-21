@@ -3,10 +3,8 @@
 namespace App\Providers;
 
 use App\Events\ClientCreated;
-use App\Events\MediaDeleting;
 use App\Events\UserCreated;
 use App\Listeners\CreateAdminUser;
-use App\Listeners\DeleteMediaFile;
 use App\Listeners\SendUserCreatedEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -28,9 +26,6 @@ class EventServiceProvider extends ServiceProvider
         ],
         UserCreated::class => [
             SendUserCreatedEmail::class
-        ],
-        MediaDeleting::class => [
-            DeleteMediaFile::class,
         ],
     ];
 

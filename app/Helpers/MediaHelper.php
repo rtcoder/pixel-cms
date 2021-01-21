@@ -19,8 +19,8 @@ class MediaHelper
      */
     public static function deleteMediaFile(Media $media)
     {
-        @unlink($media->filename);
-        Helpers::rmDir(explode('.', $media->filename)[0]);
+        @unlink($media->path);
+        Helpers::rmDir(explode('.', $media->path)[0]);
     }
 
     /**

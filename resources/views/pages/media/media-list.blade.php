@@ -33,6 +33,10 @@
                 </div>
                 <p class="ellipsis" title="{{ $item->original_name }}">{{ $item->original_name }}</p>
                 <p>{{ $item->readable_type }}</p>
+
+                <a href="{{url()->current()}}/{{ $item->id }}/delete">
+                    <span class="material-icons delete">delete</span>
+                </a>
             </div>
         @endforeach
     </div>

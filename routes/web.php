@@ -60,6 +60,9 @@ Route::middleware('auth')->group(function () {
     generateUrls('documents', DocumentController::class, 'documents', Module::DOCUMENTS_MODULE);
 
     Route::get('/media', [MediaController::class, 'index'])->name('media');
+    Route::get('/media/{id}/delete', [MediaController::class, 'delete'])
+        ->where('id', '[0-9]+')
+        ->name('media-delete');
 
     Route::get('/settings', [HomeController::class, 'index'])->name('settings');
 });

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Media\ImageHelper;
+use App\Helpers\MediaHelper;
 use App\Models\Media;
 use App\Models\MediaSizes;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -16,7 +18,7 @@ class MediaController extends Controller
     public function index()
     {
         $client_id = Auth::user()->client_id;
-        $media = Media::where('client_id', $client_id)->orderBy('id', 'desc')->get();
+        $media = Media::query()->where('client_id', $client_id)->orderBy('id', 'desc')->get();
         return view('pages.media.media-list', [
             'media' => $media
         ]);
@@ -69,4 +71,15 @@ class MediaController extends Controller
         return response()->file($filepath, $headers);
     }
 
+    public function delete(int $id): RedirectResponse
+    {
+        $media = Media::where([
+            ['id', $id],
+            ['client_id', Auth::id()]
+        ])->first();
+
+        $media->delete();
+        flash()->success('Usunięto obiekt');
+        return redirect()->route('media');
+    }
 }

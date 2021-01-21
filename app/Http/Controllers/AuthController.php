@@ -21,12 +21,12 @@ class AuthController extends Controller
         $foundUser = User::where('email', $request->get('email'))->select(['is_active'])->first();
 
         if (!$foundUser) {
-            flash()->success(__('auth.failed'));
+            flash()->error(__('auth.failed'));
             return redirect()->back()
                 ->withInput($request->input());
         }
         if (!$foundUser->is_active) {
-            flash()->success(__('auth.inactive_account'));
+            flash()->warning(__('auth.inactive_account'));
             return redirect()->back()
                 ->withInput($request->input());
         }
