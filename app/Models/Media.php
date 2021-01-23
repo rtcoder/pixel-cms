@@ -56,7 +56,7 @@ class Media extends Model
     {
         return array_map(function ($value) {
             return env('APP_URL') . '/client/storage/' . $value;
-        }, $this->thumbnails);
+        }, $this->thumbnails?:[]);
     }
 
     public function getPathAttribute(): string

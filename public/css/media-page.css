@@ -1,0 +1,79 @@
+.media {
+  width: 100%;
+  display: grid;
+  grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.item {
+  position: relative;
+  width: 100%;
+  border: 1px solid #ddd;
+  background: #ededed;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.item .img-container {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-container .material-icons {
+  font-size: 120px;
+}
+
+.item img {
+  width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: brightness(0.9);
+  transition: filter 0.2s ease-in;
+}
+
+.item img:hover {
+  filter: brightness(1);
+}
+
+.item p {
+  text-align: center;
+}
+
+label {
+  display: flex;
+  width: fit-content;
+}
+
+label input {
+  display: none;
+}
+
+.add-btn {
+  padding: 3px;
+  width: 120px;
+}
+
+.upload {
+  margin-bottom: 20px;
+}
+
+.upload td {
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.upload td.name,
+.upload td.name p {
+  width: 150px;
+}
+
+.abort span {
+  color: #f30;
+  cursor: pointer;
+}

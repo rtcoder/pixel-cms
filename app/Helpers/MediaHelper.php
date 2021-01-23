@@ -56,6 +56,7 @@ class MediaHelper
         $media->type = join('/', $type);
         $media->extension = $extension;
         $media->is_public = true;
+        $media->thumbnails = [];
 
 
         // Mime type filter should be added here in the future

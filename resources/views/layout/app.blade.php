@@ -15,7 +15,9 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url('css/app.css') }}">
+    <script src="{{ url('js/api-links.js') }}"></script>
     <script src="{{ url('js/app.js') }}"></script>
+    <script src="{{ url('js/vue.runtime.global.prod.js') }}"></script>
 
     @yield('styles')
 </head>

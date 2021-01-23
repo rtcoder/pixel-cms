@@ -9,5 +9,8 @@
         "prod": "npm run production",
         "production": "mix --production",
         "serve": "php artisan serve --port=9001"
+    },
+    "dependencies": {
+        "vue": "~3.0.5"
     }
 }

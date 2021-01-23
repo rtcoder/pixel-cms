@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Media\ImageHelper;
-use App\Helpers\MediaHelper;
 use App\Models\Media;
 use App\Models\MediaSizes;
 use Exception;
@@ -17,11 +16,7 @@ class MediaController extends Controller
 {
     public function index()
     {
-        $client_id = Auth::user()->client_id;
-        $media = Media::query()->where('client_id', $client_id)->orderBy('id', 'desc')->get();
-        return view('pages.media.media-list', [
-            'media' => $media
-        ]);
+        return view('pages.media.media-list');
     }
 
     public function show(Request $request, string $name): BinaryFileResponse

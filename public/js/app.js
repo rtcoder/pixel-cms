@@ -41,7 +41,7 @@ const fetchFromApi = (url, options) => {
             Authorization: `Bearer ${token}`,
         };
     }
-    return fetch(url, options);
+    return fetch(url, options).then(response => response.json());
 }
 
 /**
@@ -99,4 +99,53 @@ function upload(file, listeners) {
     xhr.send(data);
 
     return xhr;
+}
+
+/**
+ * Format bytes as human-readable text.
+ *
+ * @param {number} bytes Number of bytes.
+ * @param {boolean} si True to use metric (SI) units, aka powers of 1000. False to use
+ *           binary (IEC), aka powers of 1024.
+ * @param {number} dp Number of decimal places to display.
+ *
+ * @return {string} Formatted string.
+ */
+function humanFileSize(bytes, si = false, dp = 1) {
+    const thresh = si ? 1000 : 1024;
+
+    if (Math.abs(bytes) < thresh) {
+        return bytes + ' B';
+    }
+
+    const units = si
+        ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+        : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+    let u = -1;
+    const r = 10 ** dp;
+
+    do {
+        bytes /= thresh;
+        ++u;
+    } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
+
+
+    return bytes.toFixed(dp) + ' ' + units[u];
+}
+
+/**
+ *
+ * @param {number} seconds
+ * @returns {string}
+ */
+function secondsToHms(seconds) {
+    seconds = Number(seconds);
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor(seconds % 3600 / 60);
+    const s = Math.floor(seconds % 3600 % 60);
+
+    const hDisplay = h > 0 ? h : '00';
+    const mDisplay = m > 0 ? m : '00';
+    const sDisplay = s > 0 ? s : '00';
+    return `${hDisplay}:${mDisplay}:${sDisplay}`;
 }

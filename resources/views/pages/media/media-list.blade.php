@@ -1,245 +1,199 @@
 @extends('layout.app')
 @section('title', __('pages.documents'))
 
-@section('content')
 
-    <label for="files">
+@section('content')
+    <div id="media-app">
+        <label for="files">
         <span class="add-btn">
             <span class="material-icons">add</span>
             @lang('common.add')
         </span>
-        <input type="file" id="files" multiple>
-    </label>
+            <input type="file" id="files" multiple
+                   @change="uploadFiles" ref="fileInput">
+        </label>
 
-    <div class="media">
-        @foreach($media as $item)
-            <div class="item">
-                <div class="img-container">
-                    @switch(explode('/', $item->type)[0])
-                        @case('image')
-                        <img src="{{ $item->thumbnails_urls[0] }}" alt="{{ $item->filename }}">
-                        @break
-                        @case('video')
-                        <img src="{{ $item->thumbnails_urls[0] }}" alt="{{ $item->filename }}">
-                        @break
-                        @case('application')
-                        <span class="material-icons">insert_drive_file</span>
-                        @break
-                        @case('audio')
-                        <img src="{{ $item->thumbnails_urls[0] }}" alt="{{ $item->filename }}">
-                        @break
+        <div class="upload" v-if="uploadItems.length">
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th><span class="material-icons">backup</span></th>
+                    <th><span class="material-icons">speed</span></th>
+                    <th><span class="material-icons">query_builder</span></th>
+                    <th>%</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="uploadItem in uploadItems" v-bind:id="uploadItem.index">
+                    <td class="name">
+                        <p class="ellipsis"
+                           v-bind:title="uploadItem.name"
+                        >@{{ uploadItem.name }}</p>
+                    </td>
+                    <td class="size">@{{ uploadItem.uploaded }} / @{{ uploadItem.size }}</td>
+                    <td class="speed">@{{ uploadItem.speed }}</td>
+                    <td class="eta">@{{ uploadItem.eta }}</td>
+                    <td class="progress">@{{ uploadItem.progress }}</td>
+                    <td class="actions">
+                        <div class="abort" @click="abort(uploadItem.index)">
+                            <span class="material-icons">clear</span>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
-                    @endswitch
-                </div>
-                <p class="ellipsis" title="{{ $item->original_name }}">{{ $item->original_name }}</p>
-                <p>{{ $item->readable_type }}</p>
+        <div class="media">
+            <div class="item" v-for="item in items">
+                <div class="img-container" v-html="getItemIcon(item)"></div>
+                <p class="ellipsis" v-bind:title="item.original_name">@{{ item.original_name }}</p>
+                <p class="ellipsis">@{{ item.readable_type }}</p>
 
-                <a href="{{url()->current()}}/{{ $item->id }}/delete">
+                <a v-bind:href="'media/' + item.id + '/delete'">
                     <span class="material-icons delete">delete</span>
                 </a>
             </div>
-        @endforeach
+        </div>
+
+        <template v-if="!items.length">
+            @include('layout.table.no-data')
+        </template>
     </div>
 
-    @if(!count($media))
-        @include('layout.table.no-data')
-    @endif
-
-    <style>
-        .media {
-            width: 100%;
-            display: grid;
-            grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-        }
-
-        .item {
-            position: relative;
-            width: 100%;
-            border: 1px solid #ddd;
-            background: #ededed;
-            padding: 5px;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .item .img-container {
-            width: 100%;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .img-container .material-icons {
-            font-size: 120px;
-        }
-
-        .item img {
-            width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            filter: brightness(0.9);
-            transition: filter 0.2s ease-in;
-        }
-
-        .item img:hover {
-            filter: brightness(1);
-        }
-
-        .item .layer {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .layer .progress {
-            position: relative;
-            width: 100%;
-            height: 20px;
-            border-radius: 20px;
-            overflow: hidden;
-            background: rgba(150, 150, 150, 0.4);
-            border: 1px solid rgba(0, 131, 255, 0.69);
-        }
-
-        .layer .progress .bar {
-            width: 0;
-            height: 20px;
-            background: #09c;
-        }
-
-        .layer .progress .val {
-            position: absolute;
-            color: #fff;
-            z-index: 2;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 13px;
-            line-height: 20px;
-        }
-
-        .layer .abort {
-            color: #fff;
-            background: #dc0000;
-            padding: 2px 15px;
-            margin-top: 5px;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-
-        label input {
-            display: none;
-        }
-
-        .add-btn {
-            padding: 3px;
-            width: 120px;
-        }
-    </style>
+@endsection
+@section('scripts')
     <script>
-        const media = document.querySelector('.media');
-        const input = document.querySelector('input#files');
-        const requests = {};
-        input.addEventListener('change', event => {
-            console.log(input.files);
-            [...input.files].forEach(file => {
-                const index = `s${getRandomString()}`;
-                const reader = new FileReader();
-                reader.onload = function (e) {
+        const Counter = {
+            data() {
+                return {
+                    items: [],
+                    uploadItems: [],
+                    requests: {},
+                    lastNow: {},
+                    startedAt: {},
+                    lastBytes: {},
+                    progressIteration: {}
+                }
+            },
+            mounted() {
+                fetchFromApi(API_LINKS.mediaList)
+                    .then(response => this.items = [...this.items, ...response])
+            },
+            methods: {
+                getItemIcon(item) {
+                    const type = item.type.split('/')[0];
+                    const {thumbnails_urls, original_name} = item;
+                    return type === 'application'
+                        ? `<span class="material-icons">insert_drive_file</span>`
+                        : `<img src="${thumbnails_urls[0]}" alt="${original_name}">`
+                },
 
-                    let placeholder = '';
-                    const type = file.type.split('/')[0];
-                    switch (type) {
-                        case 'image':
-                            placeholder = `<img src="${e.target.result}">`;
-                            break;
-                        case 'video':
-                            placeholder = `<span class="material-icons">movie</span>`;
-                            break;
-                        case 'application':
-                            placeholder = `<span class="material-icons">insert_drive_file</span>`;
-                            break;
-                        case 'audio':
-                            placeholder = `<span class="material-icons">music_note</span>`;
-                            break;
+                abort(index) {
+                    this.requests[index].abort();
+                },
+
+                uploadFiles() {
+                    const files = this.$refs.fileInput.files;
+                    console.log(files);
+
+                    [...files].forEach(file => {
+                        const index = `s${getRandomString()}`;
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            this.startedAt[index] = new Date().getTime();
+                            this.lastNow[index] = new Date().getTime();
+                            this.lastBytes[index] = 0;
+                            this.progressIteration[index] = 0;
+                            this.addUploadRow(file, e, index);
+
+
+                            this.requests[index] = upload(file, {
+                                onProgress: ev => this.updateUploadRow(ev, index),
+                                onAbort: () => this.removeUploadRow(index),
+                                onLoad: () => {
+                                    // removeUploadRow(index);
+                                    const result = this.requests[index].response;
+                                    if (result?.id) {
+                                        this.items = [result, ...this.items];
+                                    }
+                                }
+                            })
+                        };
+
+                        reader.readAsDataURL(file);
+                    })
+                },
+
+                addUploadRow(file, event, index) {
+                    this.uploadItems.push({
+                        index,
+                        name: file.name,
+                        size: humanFileSize(file.size, true, 2),
+                        uploaded: '',
+                        speed: '',
+                        eta: '',
+                        progress: '',
+                    });
+                },
+
+                updateUploadRow(event, index) {
+                    const uploadItemIndex = this.uploadItems.findIndex(item => item.index === index);
+                    if (uploadItemIndex === -1) {
+                        return;
+                    }
+                    this.progressIteration[index]++;
+                    const uploadItem = this.uploadItems[uploadItemIndex];
+                    const {loaded, total} = event;
+
+                    const value = ((loaded * 100) / total).toFixed(1);
+                    const progress = `${value}%`;
+
+                    const now = new Date().getTime();
+                    const uploadedBytes = loaded - this.lastBytes[index];
+                    const elapsed = (now - this.lastNow[index]) / 1000;
+                    const bytesPerSecond = elapsed ? (uploadedBytes / elapsed) : 0;
+                    const remainingBytes = total - loaded;
+                    const secondsRemaining = elapsed ? remainingBytes / bytesPerSecond : 0;
+
+                    if (this.progressIteration[index] % 5 === 0) {
+                        this.lastBytes[index] = loaded;
+                        this.lastNow[index] = now;
                     }
 
-                    const div = `
-                    <div class="item" id="${index}">
-                        <div class="img-container">${placeholder}</div>
-                        <div class="layer">
-                            <div class="progress">
-                                <div class="bar"></div>
-                                <div class="val">0%</div>
-                            </div>
-                            <div class="abort" onclick="requests['${index}'].abort()">anuluj</div>
-                        </div>
-                    </div>
-                    `;
-                    media.innerHTML = div + media.innerHTML
-                    requests[index] = upload(file, {
-                        onProgress: ev => {
-                            const {loaded, total} = ev;
-                            const value = parseFloat(String(((loaded * 100) / total))).toFixed(1);
-                            const percent = `${value}%`;
-                            document.querySelector(`.item#${index} .bar`).style.width = percent;
-                            document.querySelector(`.item#${index} .val`).innerHTML = percent;
+                    const data = {
+                        uploaded: humanFileSize(loaded, true, 2),
+                        speed: humanFileSize(bytesPerSecond, true) + '/s',
+                        eta: secondsToHms(secondsRemaining),
+                        progress,
+                    }
+                    if (loaded === total) {
+                        data.speed = '';
+                        data.eta = '';
+                    }
 
-                            if (loaded === total) {
-                                document.querySelector(`.item#${index} .val`).innerHTML = 'przetwarzanie';
-                            }
-                        },
-                        onAbort: () => {
-                            document.querySelector(`.item#${index}`).remove();
-                        },
-                        onLoad: () => {
-                            document.querySelector(`.item#${index} .layer`).remove();
-                            const result = requests[index].response;
-                            const {
-                                readable_type,
-                                thumbnails_urls,
-                                original_name
-                            } = result;
-                            let placeholder = '';
-                            const type = result.type.split('/')[0];
-                            switch (type) {
-                                case 'image':
-                                case 'video':
-                                case 'audio':
-                                    placeholder = `<img src="${thumbnails_urls[0]}">`;
-                                    break;
-                                case 'application':
-                                    placeholder = `<span class="material-icons">insert_drive_file</span>`;
-                                    break;
-                            }
-                            document.querySelector(`.item#${index} .img-container`).innerHTML = placeholder;
-                            const itemDiv = document.querySelector(`.item#${index}`);
-                            itemDiv.innerHTML = itemDiv.innerHTML + `
-                            <p class="ellipsis" title="${original_name}">${original_name}</p>
-                            <p>${readable_type}</p>
-                            `;
-                        }
-                    })
-                };
+                    this.uploadItems[uploadItemIndex] = Object.assign(uploadItem, data);
+                },
 
-                reader.readAsDataURL(file);
-            })
-        });
+                removeUploadRow(index) {
+                    const uploadItemIndex = this.uploadItems.findIndex(item => item.index === index);
+                    if (uploadItemIndex === -1) {
+                        return;
+                    }
+                    this.uploadItems.splice(uploadItemIndex, 1);
+
+                    delete this.lastBytes[index];
+                    delete this.lastNow[index];
+                    delete this.requests[index];
+                }
+            }
+        }
+
+        Vue.createApp(Counter).mount('#media-app');
     </script>
-
-
-
-
-
-
+@endsection
+@section('styles')
+    <link rel="stylesheet" href="{{ url('css/media-page.css') }}">
 @endsection
