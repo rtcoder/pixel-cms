@@ -22,4 +22,7 @@ Route::middleware('api')->group(function () {
     Route::get('/media', [ApiMediaController::class, 'index']);
     Route::post('/media', [ApiMediaController::class, 'store']);
     Route::delete('/media/delete-many', [ApiMediaController::class, 'deleteMany']);
+    Route::delete('/media/{id}', [ApiMediaController::class, 'delete'])
+        ->where('id', '[0-9]+')
+        ->name('media-delete');
 });

@@ -90,9 +90,7 @@
 
                     <input type="checkbox" :checked="item.selected"
                            v-model="item.selected">
-                    <a :href="'media/' + item.id + '/delete'">
-                        <span class="material-icons delete">delete</span>
-                    </a>
+                    <span class="material-icons delete" @click="deleteOne(item.id)">delete</span>
                 </div>
             </div>
 
@@ -108,6 +106,7 @@
         const MediaListPage = {
             data() {
                 return {
+                    isLoading: false,
                     mouseOverMediaContainer: false,
                     uploadStatuses: {
                         pending: 0,
@@ -163,11 +162,29 @@
             },
             methods: {
                 deleteMany() {
+                    if (this.isLoading) {
+                        return;
+                    }
                     const ids = this.items.filter(item => item.selected).map(item => item.id);
                     const url = `${API_LINKS.mediaDeleteMany}?ids=${ids.join(',')}`;
+                    this.isLoading = true;
                     fetchFromApi(url, {method: 'DELETE'})
                         .then(() => {
-                            this.items = this.items.filter(item => !ids.includes(item.id))
+                            this.items = this.items.filter(item => !ids.includes(item.id));
+                            this.isLoading = false;
+                        });
+                },
+                deleteOne(id) {
+                    console.log('delete', this.isLoading);
+                    if (this.isLoading) {
+                        return;
+                    }
+                    const url = `${API_LINKS.mediaList}/${id}`;
+                    this.isLoading = true;
+                    fetchFromApi(url, {method: 'DELETE'})
+                        .then(() => {
+                            this.items = this.items.filter(item => id !== item.id);
+                            this.isLoading = false;
                         });
                 },
 

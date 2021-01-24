@@ -6,9 +6,7 @@ use App\Helpers\Media\ImageHelper;
 use App\Models\Media;
 use App\Models\MediaSizes;
 use Exception;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -64,17 +62,5 @@ class MediaController extends Controller
         }
         $headers = array('Content-Type: ' . $media->type);
         return response()->file($filepath, $headers);
-    }
-
-    public function delete(int $id): RedirectResponse
-    {
-        $media = Media::where([
-            ['id', $id],
-            ['client_id', Auth::id()]
-        ])->first();
-
-        $media->delete();
-        flash()->success('Usunięto obiekt');
-        return redirect()->route('media');
     }
 }

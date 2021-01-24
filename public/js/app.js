@@ -41,7 +41,9 @@ const fetchFromApi = (url, options) => {
             Authorization: `Bearer ${token}`,
         };
     }
-    return fetch(url, options).then(response => response.json());
+    return fetch(url, options)
+        .then(res => res.text())
+        .then(text => text.length ? JSON.parse(text) : null);
 }
 
 /**

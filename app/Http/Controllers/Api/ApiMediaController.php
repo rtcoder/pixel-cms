@@ -45,4 +45,17 @@ class ApiMediaController extends Controller
         }
         return response($ids);
     }
+
+    public function delete(int $id)
+    {
+        $client_id = Auth::guard('api')->user()->client_id;
+        $media = Media::where([
+            ['id', $id],
+            ['client_id', $client_id]
+        ])->first();
+        if ($media) {
+            $media->delete();
+        }
+        return response(null);
+    }
 }
