@@ -1,3 +1,4 @@
 const API_LINKS = {
-    mediaList: '/api/media'
+    mediaList: '/api/media',
+    mediaDeleteMany: '/api/media/delete-many',
 };

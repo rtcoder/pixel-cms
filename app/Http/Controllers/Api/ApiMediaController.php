@@ -6,6 +6,7 @@ use App\Helpers\MediaHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MediaRequest;
 use App\Models\Media;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Throwable;
 
@@ -32,5 +33,16 @@ class ApiMediaController extends Controller
                 'trace' => $error->getTrace()
             ], 500);
         }
+    }
+
+    public function deleteMany(Request $request)
+    {
+        $client_id = Auth::guard('api')->user()->client_id;
+        $ids = explode(',', $request->get('ids', ''));
+        $items = Media::where('client_id', $client_id)->whereIn('id', $ids)->get();
+        foreach ($items as $media) {
+            $media->delete();
+        }
+        return response($ids);
     }
 }

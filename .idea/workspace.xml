@@ -5,18 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a967dc70-7b2d-4f9e-8db6-5f18eeedd887" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/css/media-page.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/api-links.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/public/js/file-selector.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/vue.runtime.global.prod.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/en/upload.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/pl/upload.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helpers/MediaHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/MediaHelper.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ApiMediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ApiMediaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MediaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MediaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Media.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Media.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/media-page.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/media-page.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/api-links.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/api-links.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layout/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout/app.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/media/media-list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/media/media-list.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
@@ -175,7 +170,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/storage/logs/laravel.log" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/js" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/lang/pl" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -184,10 +179,10 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\dawid\projects\pixel-cms\public\js" />
-      <recent name="C:\Users\dawid\projects\pixel-cms\public\css" />
       <recent name="C:\Users\dawid\projects\pixel-cms\resources\lang\pl" />
       <recent name="C:\Users\dawid\projects\pixel-cms\resources\lang\en" />
+      <recent name="C:\Users\dawid\projects\pixel-cms\public\js" />
+      <recent name="C:\Users\dawid\projects\pixel-cms\public\css" />
       <recent name="C:\Users\dawid\projects\pixel-cms\app\Models" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -236,7 +231,7 @@
       <workItem from="1610883306824" duration="5038000" />
       <workItem from="1610889006810" duration="25940000" />
       <workItem from="1611251161064" duration="196000" />
-      <workItem from="1611396556753" duration="23108000" />
+      <workItem from="1611396556753" duration="41124000" />
     </task>
     <task id="LOCAL-00001" summary="full project in laravel">
       <created>1610202323295</created>
@@ -399,7 +394,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611251345534</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="file upload vuejs">
+      <created>1611433991098</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1611433991098</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -438,6 +440,7 @@
     <MESSAGE value="remove npm dependencies" />
     <MESSAGE value="upload many media types" />
     <MESSAGE value="Media WIP" />
-    <option name="LAST_COMMIT_MESSAGE" value="Media WIP" />
+    <MESSAGE value="file upload vuejs" />
+    <option name="LAST_COMMIT_MESSAGE" value="file upload vuejs" />
   </component>
 </project>
